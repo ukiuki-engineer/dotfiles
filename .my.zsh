@@ -12,7 +12,11 @@ if [ $? != 0 ]; then
 fi
 
 # プラグイン読み込み
-source /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh
+if [[ -e /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
+  source /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh
+elif [[ -e /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
+  source /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh
+fi
 
 #
 # ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
