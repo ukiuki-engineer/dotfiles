@@ -103,7 +103,7 @@ source $ZSH/oh-my-zsh.sh
 #
 # 個人設定
 # 大体の設定は.my.zshに書く。.zshrcにはあまり書かないようにする
-source ./.my.zsh
+source ~/.my.zsh
 # source ~/dotfiles/my.zsh
 # 環境ごとの設定
 # 環境に依存する設定は~/.local.zshに書く
