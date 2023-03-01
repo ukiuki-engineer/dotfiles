@@ -66,5 +66,5 @@ prompt_dir() {
 }
 # PROMPT
 # 改行して矢印を入れる
-PROMPT='%{%f%b%k%}$(build_prompt)
-'$ARROW
+# PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'$ARROW
+PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
