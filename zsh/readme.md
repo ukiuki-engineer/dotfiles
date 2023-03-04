@@ -10,6 +10,9 @@ zsh/
    └── readme.md
 ```
 
+## インストール方法
+git cloneしてinstall.shを叩くだけ
+
 ## theme
 cobalt2をベースとして、以下のようにカスタマイズして使用している。
 - PROMPTのgit情報にuser.nameを追加
