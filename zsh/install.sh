@@ -1,14 +1,19 @@
 #!/bin/bash
+################################################################################
+# my zshrc installation
+################################################################################
 #
-# cobalt2インストール
+# cobalt2インストール処理
 #
 function install_cobalt2() {
   # cobalt2がある場合は処理終了
-  if [[ -e ~/.oh-my-zsh/themes/cobalt2.zsh-theme ]] || [[ -e ~/Cobalt2-iterm ]]; then
+  if [[ -e ~/.oh-my-zsh/themes/cobalt2.zsh-theme ]]; then
     return
   fi
-  git clone https://github.com/wesbos/Cobalt2-iterm.git
-  mv Cobalt2-iterm ~/
+  if [[ ! -e ~/Cobalt2-iterm ]]; then
+    git clone https://github.com/wesbos/Cobalt2-iterm.git
+    mv Cobalt2-iterm ~/
+  fi
   cp ~/Cobalt2-iterm/cobalt2.zsh-theme ~/.oh-my-zsh/themes/
 }
 
