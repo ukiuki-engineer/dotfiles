@@ -1,9 +1,4 @@
 #!/bin/bash
-# FIXME oh-my-zshをインストールする処理を追加する
-# 現状はoh-my-zsh本体をそのままリポジトリに突っ込んでいる
-# NOTE: oh-my-zshインストール↓
-# curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-
 #
 # シンボリックリンクを作成する関数
 # 引数:ファイル名
@@ -20,6 +15,9 @@ function makeLink() {
   echo "${PWD}/${1}→~/${1}のシンボリックリンクを作成しました。"
 }
 
+#
+# .zshrc追記処理
+#
 function writeToZshrc() {
   echo "# 個人設定" >> ~/.zshrc
   echo "# 大体の設定はmy.zshに書く。.zshrcにはあまり書かないようにする" >> ~/.zshrc
