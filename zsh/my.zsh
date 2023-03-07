@@ -20,7 +20,7 @@ fi
 
 #
 # ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
-# memo:アイコンフォントを確認↓
+# NOTE: アイコンフォントを確認↓
 # for i in {61545..62178}; do echo -e "$i:$(printf '\\u%x' $i) "; done
 # FIXME gitの表示の背景色をピンクに変更してみる
 #
@@ -59,11 +59,11 @@ prompt_git() {
   fi
 }
 # ARROW
-if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="yellow"; fi
-ARROW='%{$fg[$NCOLOR]%}➤ %{$reset_color%}'
-prompt_dir() {
-  prompt_segment blue black '%~'
-}
+# if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="yellow"; fi
+# ARROW='%{$fg[$NCOLOR]%}➤ %{$reset_color%}'
+# prompt_dir() {
+#   prompt_segment blue black '%~'
+# }
 # PROMPT
 # 改行して矢印を入れる
 # PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'$ARROW
