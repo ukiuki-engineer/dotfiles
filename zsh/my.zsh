@@ -39,6 +39,7 @@ prompt_context() {
     fi
   fi
 }
+
 # git表示
 prompt_git() {
   local ref dirty
@@ -58,13 +59,6 @@ prompt_git() {
     echo -n "${ref/refs\/heads\// }$dirty"
   fi
 }
-# ARROW
-# if [ $UID -eq 0 ]; then NCOLOR="red"; else NCOLOR="yellow"; fi
-# ARROW='%{$fg[$NCOLOR]%}➤ %{$reset_color%}'
-# prompt_dir() {
-#   prompt_segment blue black '%~'
-# }
+
 # PROMPT
-# 改行して矢印を入れる
-# PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'$ARROW
 PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
