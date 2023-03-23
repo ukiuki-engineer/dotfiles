@@ -1,7 +1,8 @@
-#
+# NOTE: 環境によって違う箇所はlocal.zshで上書きする
+###############################################################################
 # aliases
-#
-alias ls='ls -FG' # FIXME 環境によって違うためifで分ける
+###############################################################################
+alias ls='ls -FG'
 alias la='ls -a'
 alias ll='ls -l'
 alias grep='grep --color=auto'
@@ -11,6 +12,18 @@ if [ $? != 0 ]; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
 
+###############################################################################
+# environment variables
+###############################################################################
+# manをvimで開く
+# NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
+# -Rのみ      : 保存はできないが編集自体はできてしまう
+# set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
+export MANPAGER="col -b -x | nvim -R -c 'set ft=man noma' -"
+
+###############################################################################
+# プロンプトの設定
+###############################################################################
 # プラグイン読み込み
 if [[ -e /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
   source /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh
@@ -18,7 +31,6 @@ elif [[ -e /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
   source /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh
 fi
 
-#
 # ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
 # NOTE: アイコンフォントを確認↓
 # for i in {61545..62178}; do echo -e "$i:$(printf '\\u%x' $i) "; done
@@ -60,5 +72,5 @@ prompt_git() {
   fi
 }
 
-# PROMPT
+# PROMPT定義
 PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
