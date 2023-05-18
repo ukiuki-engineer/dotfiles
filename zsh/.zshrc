@@ -100,13 +100,14 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#
+
+################################################################################
 # 個人設定
-# 大体の設定はmy.zshに書く。.zshrcにはあまり書かないようにする
-source ~/my.zsh
-# source ~/dotfiles/my.zsh
+# 大体の設定は.my.zshに書く。.zshrcにはあまり書かないようにする。
+source ~/.my.zsh
+
 # 環境ごとの設定
 # 環境に依存する設定は~/.local.zshに書く
-if [ -e ~/local.zsh ]; then
-  source ~/local.zsh
+if [ -e ~/.local.zsh ]; then
+  source ~/.local.zsh
 fi
