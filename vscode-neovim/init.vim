@@ -35,10 +35,10 @@ augroup END
 " ------------------------------------------------------------------------------
 " maps
 " ------------------------------------------------------------------------------
-nnoremap <C-j> 10j
-nnoremap <C-k> 10k
-vnoremap <C-j> 10j
-vnoremap <C-k> 10k
+nnoremap <C-j> 7j
+nnoremap <C-k> 7k
+vnoremap <C-j> 7j
+vnoremap <C-k> 7k
 " Escを2回押すと検索結果ハイライトを非表示にする
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 " <C-[>でエスケープする(何でデフォルトで使えないんだ...)
