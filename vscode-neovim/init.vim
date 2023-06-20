@@ -24,13 +24,15 @@ augroup MyVSCodeInitVim
   if has('mac') && exepath('im-select') != ""
     " MacOS用
     " NOTE: im-selectをインストールしてPATHを通しておく
-    autocmd InsertLeave,InsertEnter * :call system('im-select com.apple.keylayout.ABC')
+    autocmd InsertLeave,InsertEnter * :call jobstart('im-select com.apple.keylayout.ABC')
   endif
   if has('win32') && exepath('zenhan.exe') != ""
     " Windows用
     " NOTE: zenhanをインストールしてPATHを通しておく
-    autocmd InsertLeave,InsertEnter * :call system('zenhan.exe 0')
+    autocmd InsertLeave,InsertEnter * :call jobstart('zenhan.exe 0')
   endif
+  " FIXME: markdownだけ何故かインデン4になってしまうので一旦強制的に2に。後で原因を調べる。
+  autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
 augroup END
 " ------------------------------------------------------------------------------
 " maps
