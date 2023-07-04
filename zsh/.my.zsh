@@ -6,7 +6,7 @@ function exec-history() {
   eval $(history -n | fzf --prompt="History > ")
 }
 
-function fzf-cd() {
+function fcd() {
   eval $(find . -type d | fzf)
 }
 ###############################################################################
