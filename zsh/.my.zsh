@@ -2,13 +2,29 @@
 ###############################################################################
 # functions
 ###############################################################################
-function exec-history() {
-  eval $(history -n | fzf --prompt="History > ")
+fzf_history() {
+  selected_history=$(history -n | fzf --prompt="History > ")
+  eval ${selected_history}
+  # FIXME: 選択されたコマンドが実行された後、enterを押さないと終了しない
 }
 
-function fcd() {
+fzf_cd() {
   eval $(find . -type d | fzf)
 }
+
+fzf_nvim() {
+  local file
+  file=$(
+    rg --files --hidden --follow --glob "!**/.git/*"\
+      | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
+  )
+  if [ $file ]; then
+    nvim $file
+  fi
+}
+# TODO: fzf_git_checkout
+# TODO: fzf_kill
+# TODO: fzf_dockercontainer_bash
 ###############################################################################
 # aliases
 ###############################################################################
@@ -20,11 +36,13 @@ alias grep='grep --color=auto'
 if which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
+alias fcd='fzf_cd'
+alias fvim='fzf_nvim'
 ###############################################################################
 # bindkeies
 ###############################################################################
-zle -N exec-history
-bindkey '^r' exec-history
+zle -N fzf_history
+bindkey '^r' fzf_history
 ###############################################################################
 # environment variables
 ###############################################################################
