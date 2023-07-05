@@ -95,6 +95,7 @@ augroup MyVimrc
   autocmd!
   autocmd FileType php setlocal tabstop=4 shiftwidth=4 softtabstop=4
   autocmd ColorScheme * :call utils#custom_highlight()
+  autocmd InsertEnter * ++once execute 'source' .. expand($HOME) .. '/.vim/rc/autoclose.vim'
   " MacOS用
   if has('mac') && exepath('im-select') != ""
     " NOTE: im-selectをインストールしてPATHを通しておく
