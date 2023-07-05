@@ -32,7 +32,7 @@ bindkey '^r' exec-history
 # NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
 # -Rのみ      : 保存はできないが編集自体はできてしまう
 # set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
-export MANPAGER="col -b -x | nvim -R -c 'set ft=man noma nu' -"
+export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
 
 ###############################################################################
 # プロンプトの設定
