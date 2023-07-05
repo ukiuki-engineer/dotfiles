@@ -1,0 +1,7 @@
+/bundle/
+/.netrwhist
+.DS_Store
+Session.vim
+/plugged/
+/pack/plugins/start/vim9-autoclose
+/sessions
