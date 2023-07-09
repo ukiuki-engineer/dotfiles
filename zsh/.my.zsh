@@ -3,9 +3,10 @@
 # functions
 ###############################################################################
 fzf_history() {
-  selected_history=$(history -n | fzf --prompt="History > ")
-  eval ${selected_history}
-  # FIXME: 選択されたコマンドが実行された後、enterを押さないと終了しない
+  BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
+  CURSOR=$#BUFFER
+  zle reset-prompt
+  zle accept-line
 }
 
 fzf_cd() {
