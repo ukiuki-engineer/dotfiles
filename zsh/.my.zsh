@@ -23,9 +23,30 @@ fzf_nvim() {
     nvim $file
   fi
 }
-# TODO: fzf_git_checkout
-# TODO: fzf_kill
-# TODO: fzf_dockercontainer_bash
+
+fzf_git_checkout() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+fzf_docker_exec_bash() {
+  local cid
+  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+  [ -n "$cid" ] && docker exec -it "$cid" /bin/bash
+}
+
+fzf_kill() {
+  local pid
+  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
+
+  if [ "x$pid" != "x" ]
+  then
+    echo $pid | xargs kill -${1:-9}
+  fi
+}
 ###############################################################################
 # aliases
 ###############################################################################
@@ -37,8 +58,12 @@ alias grep='grep --color=auto'
 if which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
+# fzf系
 alias fcd='fzf_cd'
 alias fvim='fzf_nvim'
+alias gitCheckout='fzf_git_checkout'
+alias dockerExecBash='fzf_docker_exec_bash'
+alias fkill='fzf_kill'
 ###############################################################################
 # bindkeies
 ###############################################################################
