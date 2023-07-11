@@ -3,7 +3,12 @@
 # functions
 ###############################################################################
 fzf_history() {
-  BUFFER=$(history -n -r 1 | fzf --query "$LBUFFER")
+  # NOTE: fzfに渡した後に逆順になるので、最初に`history -r`で逆順にしておく
+  BUFFER=$(
+    history -r\
+      | awk '!seen[$2]++ {print $2}'\
+      | fzf --query "$LBUFFER"
+  )
   CURSOR=$#BUFFER
   zle reset-prompt
   zle accept-line
@@ -13,18 +18,13 @@ fzf_cd() {
   eval $(find . -type d | fzf)
 }
 
-fzf_nvim() {
-  local file
-  file=$(
-    rg --files --hidden --follow --glob "!**/.git/*"\
-      | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
-  )
-  if [ $file ]; then
-    nvim $file
-  fi
+fzf_with_preview() {
+  rg --files --hidden --follow --glob "!**/.git/*"\
+    | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
 }
 
-fzf_git_checkout() {
+fzf_git_branch() {
+  # TODO: enterでcheckoutするだけじゃなく、keymapを割り合てて色々出来るようにする
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
@@ -60,8 +60,8 @@ if which tree >/dev/null 2>&1; then
 fi
 # fzf系
 alias fcd='fzf_cd'
-alias fvim='fzf_nvim'
-alias gitCheckout='fzf_git_checkout'
+alias fvim='nvim $(fzf_with_preview)'
+alias gitBranches='fzf_git_branch'
 alias dockerExecBash='fzf_docker_exec_bash'
 alias fkill='fzf_kill'
 ###############################################################################
