@@ -3,10 +3,12 @@
 # functions
 ###############################################################################
 fzf_history() {
-  # NOTE: fzfに渡した後に逆順になるので、最初に`history -r`で逆順にしておく
   BUFFER=$(
-    history -r\
-      | awk '!seen[$2]++ {print $2}'\
+    history\
+      | sort -k2\
+      | uniq -f2\
+      | sort -r -k1\
+      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
       | fzf --query "$LBUFFER"
   )
   CURSOR=$#BUFFER
