@@ -32,10 +32,31 @@ fzf_git_branch() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
-fzf_docker_exec_bash() {
-  local cid
-  cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
-  [ -n "$cid" ] && docker exec -it "$cid" /bin/bash
+fzf_docker_exec_shell() {
+  # トライするシェルのリスト
+  local shells="bash, ash, sh"
+  # 実行するシェル
+  local exec_shell
+  # container id
+  local cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+
+  # 実行可能なshellを調べる
+  for shell in $(echo $shells | tr ', ' '\n'); do
+    if docker exec $cid $shell > /dev/null 2>&1; then
+      exec_shell=$shell
+      break
+    fi
+  done
+
+  # 実行可能なshellが無ければエラー終了
+  if [ -z $exec_shell ]; then
+    echo "container name: $(docker ps --format '{{.Names}}' --filter "id=$cid")"
+    echo "executable shell does not exists in $shells"
+    return 1
+  fi
+
+  # シェルを実行
+  [ -n "$cid" ] && docker exec -it "$cid" $exec_shell
 }
 
 fzf_kill() {
@@ -62,7 +83,7 @@ fi
 alias fcd='fzf_cd'
 alias fvim='nvim $(fzf_with_preview)'
 alias gitBranches='fzf_git_branch'
-alias dockerExecBash='fzf_docker_exec_bash'
+alias dockerExecShell='fzf_docker_exec_shell'
 alias fkill='fzf_kill'
 ###############################################################################
 # bindkeies
