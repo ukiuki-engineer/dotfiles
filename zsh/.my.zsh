@@ -2,23 +2,19 @@
 ###############################################################################
 # functions
 ###############################################################################
-fzf_history() {
-  BUFFER=$(
-    history\
-      | sort -k2\
-      | uniq -f2\
-      | sort -r -k1\
-      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
-      | fzf --query "$LBUFFER"
-  )
-  CURSOR=$#BUFFER
-  zle reset-prompt
-  zle accept-line
-}
-
-fzf_cd() {
-  eval $(find . -type d | fzf)
-}
+# fzf_history() {
+#   BUFFER=$(
+#     history\
+#       | sort -k2\
+#       | uniq -f2\
+#       | sort -r -k1\
+#       | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
+#       | fzf --query "$LBUFFER"
+#   )
+#   CURSOR=$#BUFFER
+#   zle reset-prompt
+#   zle accept-line
+# }
 
 fzf_with_preview() {
   rg --files --hidden --follow --glob "!**/.git/*"\
@@ -40,7 +36,7 @@ fzf_docker_exec_shell() {
   # 実行するシェル
   local exec_shell
   # container id
-  local cid=$(docker ps | sed 1d | fzf -q "$1" | awk '{print $1}')
+  local cid=$(docker ps | sed 1d | fzf -q "$1" --height=10% | awk '{print $1}')
 
   # 実行可能なshellを調べる
   for shell in $(echo $shells | tr ', ' '\n'); do
@@ -61,15 +57,6 @@ fzf_docker_exec_shell() {
   [ -n "$cid" ] && docker exec -it "$cid" $exec_shell
 }
 
-fzf_kill() {
-  local pid
-  pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
-
-  if [ "x$pid" != "x" ]
-  then
-    echo $pid | xargs kill -${1:-9}
-  fi
-}
 ###############################################################################
 # aliases
 ###############################################################################
@@ -81,17 +68,13 @@ alias grep='grep --color=auto'
 if which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
-# fzf系
-alias fcd='fzf_cd'
-alias fvim='nvim $(fzf_with_preview)'
 alias gitBranches='fzf_git_branch'
 alias dockerExecShell='fzf_docker_exec_shell'
-alias fkill='fzf_kill'
 ###############################################################################
 # bindkeies
 ###############################################################################
-zle -N fzf_history
-bindkey '^r' fzf_history
+# zle -N fzf_history
+# bindkey '^r' fzf_history
 ###############################################################################
 # environment variables
 ###############################################################################
