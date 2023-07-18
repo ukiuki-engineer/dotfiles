@@ -2,27 +2,26 @@
 ###############################################################################
 # functions
 ###############################################################################
-# fzf_history() {
-#   BUFFER=$(
-#     history\
-#       | sort -k2\
-#       | uniq -f2\
-#       | sort -r -k1\
-#       | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
-#       | fzf --query "$LBUFFER"
-#   )
-#   CURSOR=$#BUFFER
-#   zle reset-prompt
-#   zle accept-line
-# }
+fzf_history() {
+  BUFFER=$(
+    history\
+      | sort -k2\
+      | uniq -f2\
+      | sort -r -k1\
+      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
+      | fzf --query "$LBUFFER"
+  )
+  CURSOR=$#BUFFER
+  zle reset-prompt
+  zle accept-line
+}
 
 fzf_with_preview() {
   rg --files --hidden --follow --glob "!**/.git/*"\
     | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
 }
 
-fzf_git_branch() {
-  # TODO: enterでcheckoutするだけじゃなく、keymapを割り合てて色々出来るようにする
+fzf_git_checkout() {
   local branches branch
   branches=$(git branch --all | grep -v HEAD) &&
   branch=$(echo "$branches" |
@@ -30,6 +29,7 @@ fzf_git_branch() {
   git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+# 選択したcontainerのシェルを実行する
 fzf_docker_exec_shell() {
   # トライするシェルのリスト
   local shells="bash, ash, sh"
@@ -57,6 +57,13 @@ fzf_docker_exec_shell() {
   [ -n "$cid" ] && docker exec -it "$cid" $exec_shell
 }
 
+# 選択した絵文字を返す
+fzf_emoji(){
+  echo $(cat ~/.skk/SKK-JISYO.emoji.utf8 | grep -v ';;' | fzf)\
+    | awk '{print $2}'\
+    | tr -d /
+}
+
 ###############################################################################
 # aliases
 ###############################################################################
@@ -68,8 +75,9 @@ alias grep='grep --color=auto'
 if which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
-alias gitBranches='fzf_git_branch'
+alias gitCheckout='fzf_git_checkout'
 alias dockerExecShell='fzf_docker_exec_shell'
+alias emoji='fzf_emoji'
 ###############################################################################
 # bindkeies
 ###############################################################################
