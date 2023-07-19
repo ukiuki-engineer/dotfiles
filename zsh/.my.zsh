@@ -35,8 +35,14 @@ fzf_docker_exec_shell() {
   local shells="bash, ash, sh"
   # 実行するシェル
   local exec_shell
+
   # container id
   local cid=$(docker ps | sed 1d | fzf -q "$1" --height=10% | awk '{print $1}')
+
+  # container idが選択できていなければ終了
+  if [ -z "$cid" ]; then
+    return 1
+  fi
 
   # 実行可能なshellを調べる
   for shell in $(echo $shells | tr ', ' '\n'); do
@@ -46,7 +52,7 @@ fzf_docker_exec_shell() {
     fi
   done
 
-  # 実行可能なshellが無ければエラー終了
+  # 実行可能なshellが無ければ終了
   if [ -z $exec_shell ]; then
     echo "container name: $(docker ps --format '{{.Names}}' --filter "id=$cid")"
     echo "executable shell does not exists in $shells"
