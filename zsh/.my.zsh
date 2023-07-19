@@ -9,7 +9,7 @@ fzf_history() {
       | uniq -f2\
       | sort -r -k1\
       | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
-      | fzf --query "$LBUFFER"
+      | fzf --query "$LBUFFER" --height=40%
   )
   CURSOR=$#BUFFER
   zle reset-prompt
