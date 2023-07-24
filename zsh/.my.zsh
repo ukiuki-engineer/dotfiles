@@ -2,31 +2,8 @@
 ###############################################################################
 # functions
 ###############################################################################
-fzf_history() {
-  BUFFER=$(
-    history\
-      | sort -k2\
-      | uniq -f2\
-      | sort -r -k1\
-      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
-      | fzf --query "$LBUFFER" --height=40%
-  )
-  CURSOR=$#BUFFER
-  zle reset-prompt
-  zle accept-line
-}
-
-fzf_with_preview() {
-  rg --files --hidden --follow --glob "!**/.git/*"\
-    | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
-}
-
-fzf_git_checkout() {
-  local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+fzf_cd() {
+  eval $(find . -type d | fzf)
 }
 
 # 選択したcontainerのシェルを実行する
@@ -70,6 +47,42 @@ fzf_emoji(){
     | tr -d /
 }
 
+fzf_git_checkout() {
+  local branches branch
+  branches=$(git branch --all | grep -v HEAD) &&
+  branch=$(echo "$branches" |
+           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
+  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+}
+
+fzf_history() {
+  BUFFER=$(
+    history\
+      | sort -k2\
+      | uniq -f2\
+      | sort -r -k1\
+      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
+      | fzf --query "$LBUFFER" --height=40%
+  )
+  CURSOR=$#BUFFER
+  zle reset-prompt
+  zle accept-line
+}
+
+fzf_with_preview() {
+  rg --files --hidden --follow --glob "!**/.git/*"\
+    | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
+}
+
+fzf_rg_vim() {
+  rg --color=always --line-number --no-heading --smart-case "${*:-}" |
+    fzf --ansi \
+        --color "hl:-1:underline,hl+:-1:underline:reverse" \
+        --delimiter : \
+        --preview 'bat --color=always {1} --highlight-line {2}' \
+        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+        --bind 'enter:become(nvim {1} +{2})'
+}
 ###############################################################################
 # aliases
 ###############################################################################
@@ -81,9 +94,12 @@ alias grep='grep --color=auto'
 if which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
-alias gitCheckout='fzf_git_checkout'
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
+alias fcd='fzf_cd'
+alias gitCheckout='fzf_git_checkout'
+# alias rgvim='fzf_rg_vim'
+# alias fvim='nvim $(fzf_with_preview)'
 ###############################################################################
 # bindkeies
 ###############################################################################
