@@ -69,7 +69,7 @@ fzf_history() {
   zle accept-line
 }
 
-fzf_with_preview() {
+fzf_find_file_with_preview() {
   rg --files --hidden --follow --glob "!**/.git/*"\
     | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
 }
@@ -80,7 +80,7 @@ fzf_rg_vim() {
         --color "hl:-1:underline,hl+:-1:underline:reverse" \
         --delimiter : \
         --preview 'bat --color=always {1} --highlight-line {2}' \
-        --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+        --preview-window 'right:60%,border-bottom,+{2}+3/3,~3' \
         --bind 'enter:become(nvim {1} +{2})'
 }
 ###############################################################################
