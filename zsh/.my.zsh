@@ -8,6 +8,12 @@ fzf_cd() {
 
 # 選択したcontainerのシェルを実行する
 fzf_docker_exec_shell() {
+  # dockerコマンドが無ければ終了
+  if ! which docker >/dev/null 2>&1; then
+    which docker
+    return 1
+  fi
+
   # トライするシェルのリスト
   local shells="bash, ash, sh"
   # コンテナ名
@@ -101,7 +107,7 @@ alias la='ls -a'
 alias ll='ls -l'
 alias grep='grep --color=auto'
 # 簡易treeコマンド。
-if which tree >/dev/null 2>&1; then
+if ! which tree >/dev/null 2>&1; then
   alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
 fi
 alias dockerExecShell='fzf_docker_exec_shell'
