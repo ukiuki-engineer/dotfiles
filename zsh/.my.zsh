@@ -7,6 +7,7 @@ fzf_cd() {
 }
 
 # 選択したcontainerのシェルを実行する
+# TODO: ヘッダーを表示させたい
 fzf_docker_exec_shell() {
   # dockerコマンドが無ければ終了
   if ! which docker >/dev/null 2>&1; then
@@ -113,7 +114,7 @@ fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias fcd='fzf_cd'
-alias gitCheckout='fzf_git_checkout'
+alias gitBranches='fzf_git_checkout'
 # alias rgvim='fzf_rg_vim'
 # alias fvim='nvim $(fzf_with_preview)'
 ###############################################################################
