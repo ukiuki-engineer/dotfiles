@@ -162,7 +162,41 @@ prompt_context() {
   fi
 }
 
-# git表示
+# git表示 {{{
+# 未pull、未pushのcommit数を出力
+git_commit_status() {
+  git_status=$(git status)
+
+  # pullもpushも無い場合
+  if echo $git_status | grep -q "Your branch is up to date"; then
+    echo -n "󰑓 ↓0 ↑0"
+    exit
+  fi
+
+  # pull
+  if echo $git_status | grep -q "Your branch is behind"; then
+    pull=$(echo $git_status | tr -d '\n' | sed -e 's/.*Your branch is.*by //' -e 's/ commit.*//')
+    echo -n "󰑓 ↓"$pull" ↑0"
+    exit
+  fi
+
+  # push
+  if echo $git_status | grep -qE "Your branch is ahead of"; then
+    push=$(echo $git_status | tr -d '\n' | sed -e 's/.*Your branch.*by //' -e 's/ commit.*//')
+    echo -n "󰑓 ↓0 ↑"$push
+    exit
+  fi
+
+  # pull & push
+  if echo $git_status | grep -q "Your branch .* have diverged"; then
+    pull=$(echo $git_status | tr -d '\n' | sed -e 's/.*and have .* and //' -e 's/ different.*//')
+    push=$(echo $git_status | tr -d '\n' | sed -e 's/.*and have //' -e 's/and.*different.*//')
+    echo -n "󰑓 ↓"$pull " ↑"$push
+    exit
+  fi
+}
+
+# git情報のプロンプト表示
 prompt_git() {
   local ref dirty
   if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
@@ -172,7 +206,7 @@ prompt_git() {
     # gitのuser.nameとuser.emailを表示
     # $(printf '\\u%x' 62144)
     # $(printf '\\u%x' 62142)
-    ref=$ref"   "$(git config user.name)"   "$(git config user.email)" "
+    ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)"  "
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
@@ -181,6 +215,7 @@ prompt_git() {
     echo -n "${ref/refs\/heads\// }$dirty"
   fi
 }
+# }}}
 
 # PROMPT定義
 PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
