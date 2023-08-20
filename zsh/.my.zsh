@@ -206,9 +206,10 @@ prompt_git() {
     # gitのuser.nameとuser.emailを表示
     # $(printf '\\u%x' 62144)
     # $(printf '\\u%x' 62142)
-    ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)"  "
+    ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)" "
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
+      ref=$ref" "
     else
       prompt_segment green black
     fi
