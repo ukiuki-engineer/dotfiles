@@ -163,7 +163,9 @@ prompt_context() {
 }
 
 # git表示 {{{
+
 # 未pull、未pushのcommit数を出力
+# TODO: 表示が重くなるから消すかも...
 git_commit_status() {
   git_status=$(git status)
 
@@ -206,10 +208,10 @@ prompt_git() {
     # gitのuser.nameとuser.emailを表示
     # $(printf '\\u%x' 62144)
     # $(printf '\\u%x' 62142)
-    ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)" "
+    # ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)" "
+    ref=$ref"    "$(git config user.name)"    "$(git config user.email)" "
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
-      ref=$ref" "
     else
       prompt_segment green black
     fi
