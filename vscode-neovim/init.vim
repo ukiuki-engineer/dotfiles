@@ -21,7 +21,7 @@ hi CursorColumn guibg=#414041
 " ------------------------------------------------------------------------------
 augroup MyVSCodeInitVim
   autocmd!
-  " 日本語入力切り替え
+  " 日本語入力切り替え {{{
   if has('mac') && exepath('im-select') != ""
     " MacOS用
     " NOTE: im-selectをインストールしてPATHを通しておく
@@ -32,21 +32,30 @@ augroup MyVSCodeInitVim
     " NOTE: zenhanをインストールしてPATHを通しておく
     autocmd InsertLeave,InsertEnter * :call jobstart('zenhan.exe 0')
   endif
+  " }}}
+
   " FIXME: markdownだけ何故かインデン4になってしまうので一旦強制的に2に。後で原因を調べる。
   autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
 augroup END
 " ------------------------------------------------------------------------------
 " keymaps
 " ------------------------------------------------------------------------------
+" markはあまり使わないので潰してleaderにする
 let g:mapleader = "m"
+
 nnoremap <C-j> 7j
 nnoremap <C-k> 7k
 vnoremap <C-j> 7j
 vnoremap <C-k> 7k
+
 " Escを2回押すと検索結果ハイライトを非表示にする
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
+
+" gitの差分へジャンプ
 nnoremap ]c :call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap [c :call VSCodeNotify('workbench.action.editor.previousChange')<CR>
+
+" 日本語へのジャンプ、加工がしやすくなるように {{{
 lua << END
   local function map_zenkaku(hankaku_zenkaku_pairs)
     for hankaku, zenkaku in pairs(hankaku_zenkaku_pairs) do
@@ -66,7 +75,7 @@ lua << END
     ["["] = "「",
     ["]"] = "」",
     ["{"] = "『",
-    ["]"] = "』",
+    ["}"] = "』",
     [":"] = "：",
     [";"] = "；",
     ["?"] = "？",
@@ -77,3 +86,4 @@ lua << END
     ["o"] = "お",
   })
 END
+" }}}
