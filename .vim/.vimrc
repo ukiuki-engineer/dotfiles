@@ -113,8 +113,8 @@ augroup END
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <TAB> :bn<Enter>
 nnoremap <S-TAB> :bN<Enter>
-nnoremap <C-j> 10j
-nnoremap <C-k> 10k
+nnoremap <C-j> 7j
+nnoremap <C-k> 7k
 " ------------------------------------------------------------------------------
 " commands
 " ------------------------------------------------------------------------------
