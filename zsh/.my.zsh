@@ -222,3 +222,16 @@ prompt_git() {
 
 # PROMPT定義
 PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
+
+###############################################################################
+# WSL固有の設定
+###############################################################################
+if [ -n "$WSLENV" ]; then
+  # dockerのインストール
+  if ! which docker >/dev/null 2>&1; then
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
+    # sudo usermod -aG docker $USER
+  fi
+fi
