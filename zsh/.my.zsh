@@ -1,5 +1,10 @@
 # NOTE: 環境によって違う箇所は`~/.local.zsh`で上書きする
 ###############################################################################
+# 環境変数
+###############################################################################
+export FZF_DEFAULT_OPTS="--height=40%"
+
+###############################################################################
 # functions
 ###############################################################################
 fzf_cd() {
@@ -64,12 +69,31 @@ fzf_emoji(){
     | tr -d /
 }
 
-fzf_git_checkout() {
-  local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
+fzf_git_branches() {
+  # git projectでなければ終了する
+  if ! git status; then
+    return 1
+  fi
+
+  local header="Enter: checkout, >: Select action(TODO: 後でやる)"
+
+  local branch=$(
+    git branch -a | fzf \
+      --height=80% \
+      --header $header \
+      --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' "$@" \
+      | sed -e 's/\*//' -e 's/ //g'
+  )
+
+  if [ -z "$branch" ]; then
+    return 1
+  fi
+
+  if echo $branch | grep 'remotes/origin'; then
+    git checkout -t $branch
+  else
+    git checkout $branch
+  fi
 }
 
 fzf_history() {
@@ -114,9 +138,7 @@ fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias fcd='fzf_cd'
-alias gitBranches='fzf_git_checkout'
-# alias rgvim='fzf_rg_vim'
-# alias fvim='nvim $(fzf_with_preview)'
+alias gitBranches='fzf_git_branches'
 ###############################################################################
 # bindkeies
 ###############################################################################
