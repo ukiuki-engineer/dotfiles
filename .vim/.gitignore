@@ -3,5 +3,5 @@
 .DS_Store
 Session.vim
 /plugged/
-/pack/plugins/start/vim9-autoclose
+/pack/plugins/start/
 /sessions
