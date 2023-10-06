@@ -60,12 +60,7 @@ __branch_actions() {
   # 引数取得
   local branch=$1
   # 選択肢
-  local actions="\
-    checkout
-    delete
-    merge
-    echo\
-  "
+  local actions="checkout\ndelete\nmerge\necho"
   local header="Enter: select action, <: back"
   local tmp=$(mktemp)
 
