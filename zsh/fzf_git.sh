@@ -1,17 +1,12 @@
-if [[ $# -ge 1 ]]; then
-  # NOTE: ここは後で使うかも
-  exit
-fi
-
-# ------------------------------------------------------------------------------
+# branches
 _fzf_git_branches() {
   # git projectでなければ終了する
   if ! git status >/dev/null; then
     return 1
   fi
 
-  local command="echo hello>~/hello.txt"
-  local header="Enter: checkout, >: Select action(FIXME: 未実装)"
+  local header="Enter: checkout, >: Select action"
+  local tmp=$(mktemp)
 
   local branch=$(
     git branch -a | fzf \
@@ -19,26 +14,85 @@ _fzf_git_branches() {
       --header $header \
       --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' "$@" \
       --preview-window='right,70%' \
+      --bind=">:execute(echo 'select-action' > $tmp)+accept" \
       | sed -e 's/\*//' -e 's/ //g'
   )
 
+  # 選択されてなければ中断
   if [ -z "$branch" ]; then
+    rm $tmp
     return 1
   fi
 
-  if echo $branch | grep 'remotes/origin'; then
-    git checkout -t $branch
-  else
-    git checkout $branch
+  # select action
+  if cat $tmp | grep 'select-action' >/dev/null 2>&1; then
+    rm $tmp
+    __branch_actions $branch
+    return
   fi
+
+  rm $tmp
+
+  # checkout
+  __checkout $branch
 }
 
 # ------------------------------------------------------------------------------
-# TODO
-__branch_action() {
-  # local branch=$1
-  local actions="delete\ncheckout\nmerge"
-  echo $actions | fzf
+# branchに対するaction
+__branch_actions() {
+  if [[ $# -eq 0 ]]; then
+    return 1
+  fi
+
+  local branch=$1
+  local actions="checkout\ndelete\nmerge"
+  local header="Enter: select action, <: back"
+  local tmp=$(mktemp)
+
+  local action=$(
+    echo $actions | fzf \
+      --header $header \
+      --height=20% \
+      --prompt="Select actions for the branch, \"$branch\">" \
+      --bind="<:execute(echo 'back' > $tmp)+accept"
+  )
+
+  # 選択されてなければ中断
+  if [ -z "$action" ]; then
+    rm $tmp
+    return 1
+  fi
+
+  # back
+  if cat $tmp | grep 'back' >/dev/null 2>&1; then
+    rm $tmp
+    _fzf_git_branches
+    return
+  fi
+
+  rm $tmp
+
+  # ここからactionの処理
+  if [[ $action == "checkout" ]]; then
+    __checkout $branch
+  elif [[ $action == "delete" ]]; then
+    git branch -d $branch
+    _fzf_git_branches
+  elif [[ $action == "merge" ]]; then
+    echo TODO: merge
+  fi
+}
+
+# checkoutする
+__checkout() {
+  local branch=$1
+  if echo $branch | grep 'remotes/origin'; then
+    # remote
+    git checkout -t $branch
+  else
+    # local
+    git checkout $branch
+  fi
 }
 
 # ------------------------------------------------------------------------------
