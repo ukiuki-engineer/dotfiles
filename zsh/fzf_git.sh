@@ -90,13 +90,17 @@ __branch_actions() {
 
   # ここからactionの処理
   if [[ $action == "checkout" ]]; then
+    # checkout
     __checkout $branch
   elif [[ $action == "delete" ]]; then
+    # delete
     git branch -d $branch
     _fzf_git_branches
   elif [[ $action == "merge" ]]; then
-    echo TODO: merge
+    # merge
+    git merge $branch
   elif [[ $action == "echo" ]]; then
+    # echo
     echo $branch
   fi
 }
