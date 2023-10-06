@@ -69,33 +69,6 @@ fzf_emoji(){
     | tr -d /
 }
 
-fzf_git_branches() {
-  # git projectでなければ終了する
-  if ! git status; then
-    return 1
-  fi
-
-  local header="Enter: checkout, >: Select action(TODO: 後でやる)"
-
-  local branch=$(
-    git branch -a | fzf \
-      --height=80% \
-      --header $header \
-      --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' "$@" \
-      | sed -e 's/\*//' -e 's/ //g'
-  )
-
-  if [ -z "$branch" ]; then
-    return 1
-  fi
-
-  if echo $branch | grep 'remotes/origin'; then
-    git checkout -t $branch
-  else
-    git checkout $branch
-  fi
-}
-
 fzf_history() {
   BUFFER=$(
     history\
@@ -138,7 +111,6 @@ fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias fcd='fzf_cd'
-alias gitBranches='fzf_git_branches'
 ###############################################################################
 # bindkeies
 ###############################################################################
@@ -257,3 +229,5 @@ if [ -n "$WSLENV" ]; then
     # sudo usermod -aG docker $USER
   fi
 fi
+
+source ~/dotfiles/zsh/fzf_git.sh
