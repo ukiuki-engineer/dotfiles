@@ -20,6 +20,7 @@ _fzf_git_branches() {
   local header="Enter: checkout, >: Select action"
   local tmp=$(mktemp)
 
+  # 選択
   local branch=$(
     git branch -a | fzf \
       --height=80% \
@@ -56,11 +57,19 @@ __branch_actions() {
     return 1
   fi
 
+  # 引数取得
   local branch=$1
-  local actions="checkout\ndelete\nmerge"
+  # 選択肢
+  local actions="\
+    checkout
+    delete
+    merge
+    echo\
+  "
   local header="Enter: select action, <: back"
   local tmp=$(mktemp)
 
+  # 選択
   local action=$(
     echo $actions | fzf \
       --header $header \
@@ -92,6 +101,8 @@ __branch_actions() {
     _fzf_git_branches
   elif [[ $action == "merge" ]]; then
     echo TODO: merge
+  elif [[ $action == "echo" ]]; then
+    echo $branch
   fi
 }
 
