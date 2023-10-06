@@ -77,6 +77,8 @@ __branch_actions() {
     checkout,
     delete,
     merge,
+    rebase,
+    diff,
     echo,
   "
   actions=$(echo $actions | sed -e 's/,/\n/g' -e 's/ //g' | grep -vE '^$')
@@ -119,6 +121,13 @@ __branch_actions() {
   elif [[ $action == "merge" ]]; then
     # merge
     git merge $branch
+  elif [[ $action == "rebase" ]]; then
+    # rebase
+    # TODO: 動作未確認
+    git rebase $branch
+  elif [[ $action == "diff" ]]; then
+    # diff
+    git diff ${branch}..HEAD
   elif [[ $action == "echo" ]]; then
     # echo
     echo $branch
