@@ -22,13 +22,23 @@ _fzf_git_branches() {
 
   # 選択
   local branch=$(
-    git branch -a | fzf \
-      --height=80% \
-      --header $header \
-      --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' "$@" \
-      --preview-window='right,70%' \
-      --bind=">:execute(echo 'select-action' > $tmp)+accept" \
-      | sed -e 's/\*//' -e 's/ //g'
+    git branch -a \
+      --sort=-committerdate \
+      --sort=-HEAD \
+      --color=always \
+      --format=$'%(HEAD) %(color:yellow)%(refname:short)\t%(color:green)%(committerdate:short)\t%(color:blue)%(subject)%(color:reset)' \
+      | column -ts$'\t' \
+      | fzf \
+        --ansi \
+        --border \
+        --border-label ' Branches' \
+        --height=80% \
+        --header $header \
+        --preview 'git log --oneline --graph --date=format:"%Y/%m/%d %H:%M:%S" --color=always --pretty="%C(auto)%h %C(blue)%ad %C(green)[%an]%C(reset) %s"' \
+        --preview-window='right,70%' \
+        --bind=">:execute(echo 'select-action' > $tmp)+accept" \
+      | sed -e 's/\*//' \
+      | awk '{print $1}'
   )
 
   # 選択されてなければ中断
@@ -72,11 +82,14 @@ __branch_actions() {
 
   # 選択
   local action=$(
-    echo $actions | fzf \
-      --header $header \
-      --height=20% \
-      --prompt="Select actions for the branch, \"$branch\">" \
-      --bind="<:execute(echo 'back' > $tmp)+accept"
+    echo $actions \
+      | fzf \
+        --border \
+        --border-label 'Branch Actions' \
+        --header $header \
+        --height=20% \
+        --prompt="Select actions for the branch, \"$branch\">" \
+        --bind="<:execute(echo 'back' > $tmp)+accept"
   )
 
   # 選択されてなければ中断
