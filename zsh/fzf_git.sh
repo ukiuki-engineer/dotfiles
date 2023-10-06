@@ -11,7 +11,7 @@ _fzf_git_branches() {
   fi
 
   local command="echo hello>~/hello.txt"
-  local header="Enter: checkout, >: Select action(FIXME: 未実装。今は一旦echoするだけ。)"
+  local header="Enter: checkout, >: Select action(FIXME: 未実装)"
 
   local branch=$(
     git branch -a | fzf \
@@ -19,7 +19,6 @@ _fzf_git_branches() {
       --header $header \
       --preview 'git log --oneline --graph --date=short --color=always --pretty="format:%C(auto)%cd %h%d %s" $(sed s/^..// <<< {} | cut -d" " -f1)' "$@" \
       --preview-window='right,70%' \
-      --bind='>:become(echo {})' \
       | sed -e 's/\*//' -e 's/ //g'
   )
 
