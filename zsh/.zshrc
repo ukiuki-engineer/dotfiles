@@ -108,7 +108,7 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-################################################################################
+# ------------------------------------------------------------------------------
 # fzfインストール
 if [ ! -e ~/.fzf ]; then
    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -120,6 +120,9 @@ fi
 
 # 個人設定
 source ~/.my.zsh
+
+# git操作
+source ~/dotfiles/zsh/fzf_git.sh
 
 # 環境ごとの設定(dotfilesでは管理せずに、環境ごとに作る)
 if [ -e ~/.local.zsh ]; then
