@@ -57,12 +57,18 @@ __branch_actions() {
     return 1
   fi
 
-  # 引数取得
   local branch=$1
-  # 選択肢
-  local actions="checkout\ndelete\nmerge\necho"
   local header="Enter: select action, <: back"
   local tmp=$(mktemp)
+
+  # 選択肢
+  actions="
+    checkout,
+    delete,
+    merge,
+    echo,
+  "
+  actions=$(echo $actions | sed -e 's/,/\n/g' -e 's/ //g' | grep -vE '^$')
 
   # 選択
   local action=$(
