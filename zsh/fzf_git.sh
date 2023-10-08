@@ -137,8 +137,8 @@ __branch_actions() {
 # checkoutする
 __checkout() {
   local branch=$1
-  if echo $branch | grep 'remotes/origin'; then
-    # remote
+  if echo $branch | grep 'origin'; then
+    # origin
     git checkout -t $branch
   else
     # local
