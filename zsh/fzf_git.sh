@@ -42,13 +42,13 @@ _fzf_git_branches() {
   )
 
   # 選択されてなければ中断
-  if [ -z "$branch" ]; then
+  if [[ -z $branch ]]; then
     rm $tmp
     return 1
   fi
 
   # select action
-  if cat $tmp | grep 'select-action' >/dev/null 2>&1; then
+  if [[ $(cat $tmp) =~ 'select-action' ]]; then
     rm $tmp
     __branch_actions $branch
     return
@@ -96,13 +96,13 @@ __branch_actions() {
   )
 
   # 選択されてなければ中断
-  if [ -z "$action" ]; then
+  if [[ -z $action ]]; then
     rm $tmp
     return 1
   fi
 
   # back
-  if cat $tmp | grep 'back' >/dev/null 2>&1; then
+  if [[ $(cat $tmp) =~ 'back' ]]; then
     rm $tmp
     _fzf_git_branches
     return
@@ -137,7 +137,7 @@ __branch_actions() {
 # checkoutする
 __checkout() {
   local branch=$1
-  if echo $branch | grep 'origin'; then
+  if [[ $branch =~ 'origin' ]]; then
     # origin
     git checkout -t $branch
   else
