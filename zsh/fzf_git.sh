@@ -19,6 +19,15 @@ _fzf_git_branches() {
 
   local header="Enter: checkout, >: Select action"
   local tmp=$(mktemp)
+  local preview='
+    git log  \
+    --oneline \
+    --graph \
+    --date=format:"%Y/%m/%d %H:%M:%S" \
+    --color=always \
+    --pretty="%C(auto)%h %C(blue)%ad %C(green)[%an]%C(reset) %s" \
+    {1}
+  '
 
   # 選択
   local branch=$(
@@ -34,7 +43,7 @@ _fzf_git_branches() {
         --border-label ' Branches' \
         --height=80% \
         --header $header \
-        --preview 'git log --oneline --graph --date=format:"%Y/%m/%d %H:%M:%S" --color=always --pretty="%C(auto)%h %C(blue)%ad %C(green)[%an]%C(reset) %s"' \
+        --preview $preview \
         --preview-window='right,70%' \
         --bind=">:execute(echo 'select-action' > $tmp)+accept" \
       | sed -e 's/\*//' \
