@@ -1,6 +1,8 @@
 # ------------------------------------------------------------------------------
 # fzfによるgit操作
-# →前提: fzfがインストールされていること
+# →前提: 以下がインストールされていること
+#   - fzf
+#   - bat
 # →インストール方法: このscriptを、.bashrcや.zshrc中でsourceするだけ
 # →使用方法： 以下のコマンドが使用可能(今はまだ一つ。今後増えていく予定)
 #   ・gitBranches: ブランチ操作
@@ -17,8 +19,8 @@ _fzf_git_branches() {
     return 1
   fi
 
-  local header="Enter: checkout, >: Select action"
   local tmp=$(mktemp)
+  local header="Enter: checkout, >: Select action"
   local preview='
     git log  \
     --oneline \
@@ -69,6 +71,55 @@ _fzf_git_branches() {
   __checkout $branch
 }
 
+# statuses
+_fzf_git_status() {
+  # TODO: stage all
+  # TODO: unstage all
+  local tmp=$(mktemp)
+  local header=">: Select action"
+  local preview='
+    if echo {} | grep -E "^ M|^ D" >/dev/null; then
+      git -c color.diff=always diff -- {2}
+    elif echo {} | grep -E "^M|^D" >/dev/null; then
+      git -c color.diff=always diff --staged {2}
+    elif [[ {1} == "??" ]]; then
+      bat --color=always {2}
+    elif [[ {1} == "A" ]]; then
+      git -c color.diff=always diff --staged {2}
+    fi
+  '
+
+  statuses=$(
+    git -c color.status=always status --porcelain -s --find-renames \
+      | fzf \
+        --multi \
+        --ansi \
+        --border \
+        --border-label 'Git Status' \
+        --height=80% \
+        --header $header \
+        --bind="tab:toggle+down" \
+        --bind=">:execute(echo 'select-action' > $tmp)+accept" \
+        --preview $preview \
+        --preview-window='right,70%' \
+      | awk '{print $2}'
+  )
+
+  # 選択されてなければ中断
+  if [[ -z $statuses ]]; then
+    rm $tmp
+    return 1
+  fi
+
+  # select action
+  if [[ $(cat $tmp) =~ 'select-action' ]]; then
+    rm $tmp
+    __status_actions $branch
+    return
+  fi
+
+  echo $statuses
+}
 # ------------------------------------------------------------------------------
 # branchに対するaction
 __branch_actions() {
@@ -155,5 +206,12 @@ __checkout() {
   fi
 }
 
+__status_actions() {
+  # TODO: add
+  # TODO: stash
+  # TODO: reset
+  echo "TODO: __status_actions()"
+}
 # ------------------------------------------------------------------------------
 alias gitBranches='_fzf_git_branches'
+alias gitStatus='_fzf_git_status'
