@@ -233,4 +233,3 @@ if [ -n "$WSLENV" ]; then
   fi
 fi
 
-source ~/dotfiles/zsh/fzf_git.sh
