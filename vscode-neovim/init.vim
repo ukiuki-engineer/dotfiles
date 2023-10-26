@@ -51,9 +51,17 @@ vnoremap <C-k> 7k
 " Escを2回押すと検索結果ハイライトを非表示にする
 nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 
+" VSCode側の機能を呼び出すmapping {{{
+" NOTE: 
+" https://code.visualstudio.com/docs/getstarted/keybindings
+
 " gitの差分へジャンプ
 nnoremap ]c :call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap [c :call VSCodeNotify('workbench.action.editor.previousChange')<CR>
+" NOTE: 以下も割り当てても良いけど、とりあえずcmd+shift+pからコマンド叩く運用で
+" git.stageSelectedRanges
+" git.unstageSelectedRanges
+" }}}
 
 " 日本語へのジャンプ、加工がしやすくなるように {{{
 lua << END
@@ -68,22 +76,43 @@ lua << END
     end
   end
   map_zenkaku({
-    [","] = "、",
-    ["."] = "。",
+    [" "] = "　",
+    ["!"] = "！",
+    ["%"] = "％",
+    ["&"] = "＆",
     ["("] = "（",
     [")"] = "）",
-    ["["] = "「",
-    ["]"] = "」",
-    ["{"] = "『",
-    ["}"] = "』",
+    ["+"] = "＋",
+    [","] = "、",
+    ["-"] = "ー",
+    ["."] = "。",
+    ["/"] = "・",
+    ["0"] = "０",
+    ["1"] = "１",
+    ["2"] = "２",
+    ["3"] = "３",
+    ["4"] = "４",
+    ["5"] = "５",
+    ["6"] = "６",
+    ["7"] = "７",
+    ["8"] = "８",
+    ["9"] = "９",
     [":"] = "：",
     [";"] = "；",
+    ["<"] = "＜",
+    ["="] = "＝",
+    [">"] = "＞",
     ["?"] = "？",
+    ["["] = "「",
+    ["]"] = "」",
     ["a"] = "あ",
-    ["i"] = "い",
-    ["u"] = "う",
     ["e"] = "え",
+    ["i"] = "い",
     ["o"] = "お",
+    ["u"] = "う",
+    ["{"] = "『",
+    ["|"] = "｜",
+    ["}"] = "』",
   })
 END
 " }}}
