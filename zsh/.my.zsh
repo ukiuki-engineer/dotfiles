@@ -138,7 +138,7 @@ elif [[ -e /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
   source /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh
 fi
 
-# ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
+# NOTE: ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
 # NOTE: アイコンフォントを確認↓
 # for i in {61545..62178}; do echo -e "$i:$(printf '\\u%x' $i) "; done
 # FIXME gitの表示の背景色をピンクに変更してみる
@@ -216,6 +216,11 @@ prompt_git() {
   fi
 }
 # }}}
+
+# Dir: current working directory
+prompt_dir() {
+  prompt_segment blue black '%~'
+}
 
 # PROMPT定義
 PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
