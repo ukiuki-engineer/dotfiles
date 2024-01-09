@@ -39,4 +39,3 @@ cp ~/Cobalt2-iterm/cobalt2.zsh-theme ~/.oh-my-zsh/themes/
 make_link .zshrc
 # my.zshのシンボリックリンクをホームディレクトリに
 make_link .my.zsh
-
