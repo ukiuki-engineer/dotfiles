@@ -119,11 +119,11 @@ fi
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # 個人設定
-source ~/.my.zsh
+source ~/.zsh/my.zsh
 
 # 環境ごとの設定(dotfilesでは管理せずに、環境ごとに作る)
-if [ -e ~/.local.zsh ]; then
-  source ~/.local.zsh
+if [ -e ~/.zsh/local.zsh ]; then
+  source ~/.zsh/local.zsh
 fi
 
 if [ ! -e ~/zsh-syntax-highlighting ]; then
