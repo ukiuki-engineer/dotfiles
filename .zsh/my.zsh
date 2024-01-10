@@ -131,13 +131,6 @@ export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
 # ------------------------------------------------------------------------------
 # プロンプトの設定
 # ------------------------------------------------------------------------------
-# プラグイン読み込み
-if [[ -e /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
-  source /opt/homebrew/Cellar/zsh-git-prompt/0.5/zshrc.sh
-elif [[ -e /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh ]]; then
-  source /usr/local/Cellar/zsh-git-prompt/0.5/zshrc.sh
-fi
-
 # NOTE: ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
 # NOTE: アイコンフォントを確認↓
 # for i in {61545..62178}; do echo -e "$i:$(printf '\\u%x' $i) "; done
