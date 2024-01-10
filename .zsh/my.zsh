@@ -105,12 +105,8 @@ export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
 
 # ------------------------------------------------------------------------------
 # プロンプトの設定
+# ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
 # ------------------------------------------------------------------------------
-# NOTE: ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
-# NOTE: アイコンフォントを確認↓
-# for i in {61545..62178}; do echo -e "$i:$(printf '\\u%x' $i) "; done
-# FIXME gitの表示の背景色をピンクに変更してみる
-#
 prompt_context() {
   local user=`whoami`
 
@@ -125,42 +121,6 @@ prompt_context() {
   fi
 }
 
-# git表示 {{{
-
-# 未pull、未pushのcommit数を出力
-# TODO: 表示が重くなるから消すかも...
-git_commit_status() {
-  git_status=$(git status)
-
-  # pullもpushも無い場合
-  if echo $git_status | grep -q "Your branch is up to date"; then
-    echo -n "󰑓 ↓0 ↑0"
-    exit
-  fi
-
-  # pull
-  if echo $git_status | grep -q "Your branch is behind"; then
-    pull=$(echo $git_status | tr -d '\n' | sed -e 's/.*Your branch is.*by //' -e 's/ commit.*//')
-    echo -n "󰑓 ↓"$pull" ↑0"
-    exit
-  fi
-
-  # push
-  if echo $git_status | grep -qE "Your branch is ahead of"; then
-    push=$(echo $git_status | tr -d '\n' | sed -e 's/.*Your branch.*by //' -e 's/ commit.*//')
-    echo -n "󰑓 ↓0 ↑"$push
-    exit
-  fi
-
-  # pull & push
-  if echo $git_status | grep -q "Your branch .* have diverged"; then
-    pull=$(echo $git_status | tr -d '\n' | sed -e 's/.*and have .* and //' -e 's/ different.*//')
-    push=$(echo $git_status | tr -d '\n' | sed -e 's/.*and have //' -e 's/and.*different.*//')
-    echo -n "󰑓 ↓"$pull " ↑"$push
-    exit
-  fi
-}
-
 # git情報のプロンプト表示
 prompt_git() {
   local ref dirty
@@ -169,7 +129,6 @@ prompt_git() {
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
     # refに情報を追加
-    # ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)" "
     ref=$ref"    "$(git config user.name)"    "$(git config user.email)" "
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
@@ -179,7 +138,6 @@ prompt_git() {
     echo -n "${ref/refs\/heads\// }$dirty"
   fi
 }
-# }}}
 
 # Dir: current working directory
 prompt_dir() {
