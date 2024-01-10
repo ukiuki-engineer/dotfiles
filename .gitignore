@@ -1,3 +1,4 @@
 .DS_Store
 /vscode-neovim/pack/dist/opt/*
 Session.vim
+local.zsh
