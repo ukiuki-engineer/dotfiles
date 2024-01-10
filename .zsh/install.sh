@@ -18,7 +18,7 @@ function make_link() {
     echo " \"~/${target_name}\" のバックアップ \"~/${target_name}.bak\" を作成しました。"
   fi
   ln -s ${target_path} ~/${target_name}
-  echo "シンボリックリンク \"${target_path}→~/${target_name}\" を作成しました。"
+  echo "シンボリックリンク \"${target_path} -> ~/${target_name}\" を作成しました。"
 }
 
 # oh-my-zshのインストール
