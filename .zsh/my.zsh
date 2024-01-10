@@ -7,10 +7,6 @@ export FZF_DEFAULT_OPTS="--height=60% --border"
 # ------------------------------------------------------------------------------
 # functions
 # ------------------------------------------------------------------------------
-fzf_cd() {
-  eval $(find . -type d | fzf)
-}
-
 # 選択したcontainerのシェルを実行する
 # TODO: ヘッダーを表示させたい
 fzf_docker_exec_shell() {
@@ -69,20 +65,6 @@ fzf_emoji(){
     | tr -d /
 }
 
-fzf_history() {
-  BUFFER=$(
-    history\
-      | sort -k2\
-      | uniq -f2\
-      | sort -r -k1\
-      | awk '{ for (i = 2; i <= NF; i++) printf $i " "; print "" }'\
-      | fzf --query "$LBUFFER" --height=40%
-  )
-  CURSOR=$#BUFFER
-  zle reset-prompt
-  zle accept-line
-}
-
 fzf_find_file_with_preview() {
   rg --files --hidden --follow --glob "!**/.git/*"\
     | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
@@ -111,13 +93,6 @@ if ! which tree >/dev/null 2>&1; then
 fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
-alias fcd='fzf_cd'
-
-# ------------------------------------------------------------------------------
-# bindkeies
-# ------------------------------------------------------------------------------
-# zle -N fzf_history
-# bindkey '^r' fzf_history
 
 # ------------------------------------------------------------------------------
 # environment variables
@@ -141,10 +116,8 @@ prompt_context() {
 
   if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
     if [[ $(\uname) == "Darwin" ]]; then
-      # $(printf '\\u%x' 61817)
       prompt_segment black default "%(!.%{%F{yellow}%}.)"
     elif [[ $(\uname) == "Linux" ]]; then
-      # $(printf '\\u%x' 61820)
       prompt_segment black default "%(!.%{%F{yellow}%}.)"
     else
       prompt_segment black default "%(!.%{%F{yellow}%}.)✝"
@@ -195,9 +168,7 @@ prompt_git() {
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-    # gitのuser.nameとuser.emailを表示
-    # $(printf '\\u%x' 62144)
-    # $(printf '\\u%x' 62142)
+    # refに情報を追加
     # ref=$ref"  $(git_commit_status)    "$(git config user.name)"    "$(git config user.email)" "
     ref=$ref"    "$(git config user.name)"    "$(git config user.email)" "
     if [[ -n $dirty ]]; then
