@@ -1,8 +1,14 @@
 # NOTE: 環境によって違う箇所は`~/.local.zsh`で上書きする
 # ------------------------------------------------------------------------------
-# 環境変数
+# environment variables
 # ------------------------------------------------------------------------------
 export FZF_DEFAULT_OPTS="--height=60% --border"
+# manをvimで開く
+# NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
+# -Rのみ      : 保存はできないが編集自体はできてしまう
+# set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
+export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
+
 
 # ------------------------------------------------------------------------------
 # cd周りの設定
@@ -110,15 +116,7 @@ if ! which tree >/dev/null 2>&1; then
 fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
-
-# ------------------------------------------------------------------------------
-# environment variables
-# ------------------------------------------------------------------------------
-# manをvimで開く
-# NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
-# -Rのみ      : 保存はできないが編集自体はできてしまう
-# set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
-export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
+alias cds='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 
 # ------------------------------------------------------------------------------
 # プロンプトの設定
