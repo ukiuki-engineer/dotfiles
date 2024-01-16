@@ -33,9 +33,6 @@ augroup MyVSCodeInitVim
     autocmd InsertLeave,InsertEnter * :call jobstart('zenhan.exe 0')
   endif
   " }}}
-
-  " FIXME: markdownだけ何故かインデン4になってしまうので一旦強制的に2に。後で原因を調べる。
-  autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=2
 augroup END
 " ------------------------------------------------------------------------------
 " keymaps
