@@ -40,7 +40,11 @@ fzf_docker_exec_shell() {
   fi
 
   # トライするシェルのリスト
-  local shells="bash, ash, sh"
+  local shells="
+    bash
+    ash
+    sh
+  "
   # コンテナ名
   local container_name
   # 実行するシェル
@@ -60,7 +64,7 @@ fzf_docker_exec_shell() {
   container_name=$(docker ps --format '{{.Names}}' --filter "id=$cid")
 
   # 実行可能なshellを調べる
-  for shell in $(echo $shells | tr ', ' '\n'); do
+  for shell in $shells; do
     if docker exec $cid $shell > /dev/null 2>&1; then
       exec_shell=$shell
       break
