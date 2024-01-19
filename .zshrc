@@ -115,7 +115,7 @@ if [ ! -e ~/.fzf ]; then
    ~/.fzf/install --key-bindings --completion  --update-rc   
 fi
 
-# fzfの設定
+# fzfの設定をロード
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # 個人設定
