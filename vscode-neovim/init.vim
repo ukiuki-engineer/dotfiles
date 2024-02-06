@@ -4,6 +4,8 @@
 " ------------------------------------------------------------------------------
 " options
 " ------------------------------------------------------------------------------
+" runtimepathを追加(まだ使ってないけど...)
+set runtimepath+=~/dotfiles/vscode-neovim
 " オートインデント
 set autoindent
 " クリップボード連携
@@ -55,6 +57,10 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 " gitの差分へジャンプ
 nnoremap ]c :call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap [c :call VSCodeNotify('workbench.action.editor.previousChange')<CR>
+" 定義ジャンプ
+nnoremap gd :call VSCodeNotify('editor.action.revealDefinition')<CR>
+" hover表示
+nnoremap K :call VSCodeNotify('editor.action.showHover')<CR>
 " NOTE: 以下も割り当てても良いけど、とりあえずcmd+shift+pからコマンド叩く運用で
 " git.stageSelectedRanges
 " git.unstageSelectedRanges
