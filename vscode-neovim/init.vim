@@ -57,13 +57,16 @@ nnoremap <silent> <Esc><Esc> :nohlsearch<CR><Esc>
 " gitの差分へジャンプ
 nnoremap ]c :call VSCodeNotify('workbench.action.editor.nextChange')<CR>
 nnoremap [c :call VSCodeNotify('workbench.action.editor.previousChange')<CR>
+" 選択範囲をstage
+nnoremap <leader>hs :call VSCodeNotify('git.stageSelectedRanges')<CR>
+" 選択範囲をunstage
+nnoremap <leader>hu :call VSCodeNotify('git.unstageSelectedRanges')<CR>
+" 選択範囲を元に戻す
+nnoremap <leader>hr :call VSCodeNotify('git.revertSelectedRanges')<CR>
 " 定義ジャンプ
 nnoremap gd :call VSCodeNotify('editor.action.revealDefinition')<CR>
 " hover表示
 nnoremap K :call VSCodeNotify('editor.action.showHover')<CR>
-" NOTE: 以下も割り当てても良いけど、とりあえずcmd+shift+pからコマンド叩く運用で
-" git.stageSelectedRanges
-" git.unstageSelectedRanges
 " }}}
 
 " 日本語へのジャンプ、加工がしやすくなるように {{{
