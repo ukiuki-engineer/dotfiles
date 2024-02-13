@@ -136,4 +136,7 @@ if has("gui_macvim") && has("gui_running")
 endif
 " ------------------------------------------------------------------------------
 packadd! matchit " %でタグジャンプを有効化
+" ファイル形式別プラグインの有効化
+filetype plugin indent on
+" シンタックスハイライトの有効化
 syntax enable
