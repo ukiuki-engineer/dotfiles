@@ -143,14 +143,15 @@ prompt_git() {
     ZSH_THEME_GIT_PROMPT_DIRTY='±'
     dirty=$(parse_git_dirty)
     ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-    # refに情報を追加
-    ref=$ref"    "$(git config user.name)"    "$(git config user.email)" "
     if [[ -n $dirty ]]; then
       prompt_segment yellow black
     else
       prompt_segment green black
     fi
     echo -n "${ref/refs\/heads\// }$dirty"
+    # ユーザー情報を表示
+    user_info="  "$(git config user.name)"    "$(git config user.email)""
+    prompt_segment cyan black "$user_info"
   fi
 }
 
