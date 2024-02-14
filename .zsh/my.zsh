@@ -1,4 +1,7 @@
-# NOTE: 環境によって違う箇所は`~/.local.zsh`で上書きする
+# ==============================================================================
+# 主な独自設定はここに書く
+# NOTE: 環境によって違う箇所は`~/.zsh/local.zsh`で上書きする
+# ==============================================================================
 # ------------------------------------------------------------------------------
 # environment variables
 # ------------------------------------------------------------------------------
@@ -8,7 +11,6 @@ export FZF_DEFAULT_OPTS="--height=60% --border"
 # -Rのみ      : 保存はできないが編集自体はできてしまう
 # set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
 export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
-
 
 # ------------------------------------------------------------------------------
 # cd周りの設定
@@ -27,6 +29,7 @@ setopt AUTO_CD
 setopt AUTO_PUSHD
 # 重複したディレクトリをスタックに追加しない
 setopt PUSHD_IGNORE_DUPS
+
 # ------------------------------------------------------------------------------
 # functions
 # ------------------------------------------------------------------------------
@@ -110,17 +113,13 @@ alias ls='ls -FG'
 alias la='ls -a'
 alias ll='ls -l'
 alias grep='grep --color=auto'
-# 簡易treeコマンド。
-if ! which tree >/dev/null 2>&1; then
-  alias tree="pwd;find . | sort | sed '1d;s/^\.//;s/\/\([^/]*\)$/|--\1/;s/\/[^/|]*/|  /g'"
-fi
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias cds='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 
 # ------------------------------------------------------------------------------
 # プロンプトの設定
-# ~/.oh-my-zsh/themes/cobalt2.zsh-themeの設定の上書き
+# ~/.oh-my-zsh/themes/cobalt2.zsh-theme をオーバーライドする
 # ------------------------------------------------------------------------------
 prompt_context() {
   local user=`whoami`
@@ -157,6 +156,7 @@ prompt_git() {
 
 # Dir: current working directory
 prompt_dir() {
+  # フルパスを表示
   prompt_segment blue black '%~'
 }
 

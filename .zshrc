@@ -107,8 +107,19 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
+# 各種ツールのインストール/ロード
+# ------------------------------------------------------------------------------
+# zsh-syntax-highlighting
+if [ ! -e ~/zsh-syntax-highlighting ]; then
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
+  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else
+  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
 # fzfインストール
 if [ ! -e ~/.fzf ]; then
    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
@@ -118,17 +129,14 @@ fi
 # fzfの設定をロード
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# ------------------------------------------------------------------------------
+# 設定をロード
+# ------------------------------------------------------------------------------
+
 # 個人設定
 source ~/.zsh/my.zsh
 
 # 環境ごとの設定(dotfilesでは管理せずに、環境ごとに作る)
 if [ -e ~/.zsh/local.zsh ]; then
   source ~/.zsh/local.zsh
-fi
-
-if [ ! -e ~/zsh-syntax-highlighting ]; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
-  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 fi
