@@ -147,7 +147,7 @@ prompt_git() {
     else
       prompt_segment green black
     fi
-    echo -n "${ref/refs\/heads\// }$dirty"
+    echo -n "${ref/refs\/heads\// } $dirty"
     # ユーザー情報を表示
     user_info="  "$(git config user.name)"    "$(git config user.email)""
     prompt_segment cyan black "$user_info"
