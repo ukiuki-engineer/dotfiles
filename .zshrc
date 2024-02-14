@@ -129,6 +129,14 @@ fi
 # fzfの設定をロード
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
+# mytoolsをダウンロード
+if [ ! -e ~/mytools ]; then
+  git clone https://github.com/ukiuki-engineer/mytools
+fi
+
+# fzfによるgit操作設定をロード
+[ -f ~/mytools/fzf_git/fzf_git.sh ] && source ~/mytools/fzf_git/fzf_git.sh
+
 # ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------
