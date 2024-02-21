@@ -73,10 +73,14 @@ nnoremap K :call VSCodeNotify('editor.action.showHover')<CR>
 lua << END
   local function map_zenkaku(hankaku_zenkaku_pairs)
     for hankaku, zenkaku in pairs(hankaku_zenkaku_pairs) do
-      vim.keymap.set('n', '<leader>f' .. hankaku, 'f' .. zenkaku, {})
-      vim.keymap.set('n', '<leader>t' .. hankaku, 't' .. zenkaku, {})
+      vim.keymap.set({ 'n', 'x' }, '<leader>f' .. hankaku, 'f' .. zenkaku, {})
+      vim.keymap.set({ 'n', 'x' }, '<leader>t' .. hankaku, 't' .. zenkaku, {})
+      vim.keymap.set({ 'n', 'x' }, '<leader>F' .. hankaku, 'F' .. zenkaku, {})
+      vim.keymap.set({ 'n', 'x' }, '<leader>T' .. hankaku, 'T' .. zenkaku, {})
       vim.keymap.set('n', '<leader>df' .. hankaku, 'df' .. zenkaku, {})
       vim.keymap.set('n', '<leader>dt' .. hankaku, 'dt' .. zenkaku, {})
+      vim.keymap.set('n', '<leader>cf' .. hankaku, 'cf' .. zenkaku, {})
+      vim.keymap.set('n', '<leader>ct' .. hankaku, 'ct' .. zenkaku, {})
       vim.keymap.set('n', '<leader>yf' .. hankaku, 'yf' .. zenkaku, {})
       vim.keymap.set('n', '<leader>yt' .. hankaku, 'yt' .. zenkaku, {})
     end
