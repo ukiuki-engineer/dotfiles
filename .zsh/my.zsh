@@ -13,8 +13,14 @@ export FZF_DEFAULT_OPTS="--height=60% --border"
 export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
 
 # ------------------------------------------------------------------------------
-# cd周りの設定
+# 基本的な設定
 # ------------------------------------------------------------------------------
+# 補完候補をカーソルで選択できるように
+autoload -U compinit
+compinit
+zstyle ':completion:*:default' menu select=1
+
+# cd周り
 # auto_ls
 function chpwd(){
     if [[ $(pwd) != $HOME ]]; then;
@@ -116,52 +122,6 @@ alias grep='grep --color=auto'
 alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias cds='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
-
-# ------------------------------------------------------------------------------
-# プロンプトの設定
-# ~/.oh-my-zsh/themes/cobalt2.zsh-theme をオーバーライドする
-# ------------------------------------------------------------------------------
-prompt_context() {
-  local user=`whoami`
-
-  if [[ "$user" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    if [[ $(\uname) == "Darwin" ]]; then
-      prompt_segment black default "%(!.%{%F{yellow}%}.)"
-    elif [[ $(\uname) == "Linux" ]]; then
-      prompt_segment black default "%(!.%{%F{yellow}%}.)"
-    else
-      prompt_segment black default "%(!.%{%F{yellow}%}.)✝"
-    fi
-  fi
-}
-
-# git情報のプロンプト表示
-prompt_git() {
-  local ref dirty
-  if $(git rev-parse --is-inside-work-tree >/dev/null 2>&1); then
-    ZSH_THEME_GIT_PROMPT_DIRTY='±'
-    dirty=$(parse_git_dirty)
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || ref="➦ $(git show-ref --head -s --abbrev |head -n1 2> /dev/null)"
-    if [[ -n $dirty ]]; then
-      prompt_segment yellow black
-    else
-      prompt_segment green black
-    fi
-    echo -n "${ref/refs\/heads\// } $dirty"
-    # ユーザー情報を表示
-    user_info="  "$(git config user.name)"    "$(git config user.email)""
-    prompt_segment cyan black "$user_info"
-  fi
-}
-
-# Dir: current working directory
-prompt_dir() {
-  # フルパスを表示
-  prompt_segment blue black '%~'
-}
-
-# PROMPT定義
-PROMPT='%{%f%b%k%}$(build_prompt)'$'\n'
 
 # ------------------------------------------------------------------------------
 # WSL固有の設定

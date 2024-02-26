@@ -1,14 +1,4 @@
 # ------------------------------------------------------------------------------
-# oh-my-zsh
-# ------------------------------------------------------------------------------
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Theme configuration
-ZSH_THEME="cobalt2"
-
-source $ZSH/oh-my-zsh.sh
-# ------------------------------------------------------------------------------
 # zinit
 # ------------------------------------------------------------------------------
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
@@ -20,6 +10,8 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
+zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
+zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light unixorn/fzf-zsh-plugin

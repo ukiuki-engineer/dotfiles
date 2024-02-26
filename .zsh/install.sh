@@ -21,20 +21,6 @@ function make_link() {
   echo "シンボリックリンク \"${target_path} -> ~/${target_name}\" を作成しました。"
 }
 
-# oh-my-zshのインストール
-if [[ ! -e ~/.oh-my-zsh ]]; then
-  curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
-fi
-
-# cobalt2のインストール
-if [[ ! -e ~/.oh-my-zsh/themes/cobalt2.zsh-theme ]]; then
-  if [[ ! -e ~/Cobalt2-iterm ]]; then
-    git clone https://github.com/wesbos/Cobalt2-iterm.git
-    mv Cobalt2-iterm ~/
-  fi
-  cp ~/Cobalt2-iterm/cobalt2.zsh-theme ~/.oh-my-zsh/themes/
-fi
-
 # zinitのインストール
 if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
   print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
