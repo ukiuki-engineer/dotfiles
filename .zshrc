@@ -15,8 +15,6 @@ zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light unixorn/fzf-zsh-plugin
-# oh-my-zshのプラグイン
-# zinit snippet OMZP::git
 # ------------------------------------------------------------------------------
 # 手動インストール
 # ------------------------------------------------------------------------------
@@ -27,7 +25,6 @@ fi
 
 # fzfによるgit操作設定をロード
 [ -f ~/mytools/fzf_git/fzf_git.sh ] && source ~/mytools/fzf_git/fzf_git.sh
-
 # ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------

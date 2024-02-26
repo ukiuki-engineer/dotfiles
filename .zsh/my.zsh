@@ -41,7 +41,6 @@ setopt AUTO_CD
 setopt AUTO_PUSHD
 # 重複したディレクトリをスタックに追加しない
 setopt PUSHD_IGNORE_DUPS
-
 # ------------------------------------------------------------------------------
 # functions
 # ------------------------------------------------------------------------------
@@ -117,7 +116,6 @@ fzf_rg_vim() {
         --preview-window 'right:60%,border-bottom,+{2}+3/3,~3' \
         --bind 'enter:become(nvim {1} +{2})'
 }
-
 # ------------------------------------------------------------------------------
 # aliases
 # ------------------------------------------------------------------------------
@@ -129,7 +127,6 @@ alias dockerExecShell='fzf_docker_exec_shell'
 alias emoji='fzf_emoji'
 alias cds='dirs -v; echo -n "select number: "; read newdir; cd +"$newdir"'
 alias gitLogOneline='git log --oneline --graph --date=format:"%Y/%m/%d %H:%M:%S" --color=always --pretty="%C(auto)%h %C(blue)%ad %C(green)[%an]%C(reset) %s" '
-
 # ------------------------------------------------------------------------------
 # WSL固有の設定
 # ------------------------------------------------------------------------------
