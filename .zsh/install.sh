@@ -3,11 +3,14 @@
 # my zshrc installation
 ################################################################################
 #
-# シンボリックリンクを作成する関数
+# ユーザーホームにシンボリックリンクを作成する関数
 # 引数:ファイル名
 #
 function make_link() {
   target_path=$1
+  if [[ ! -f ${target_path} ]]; then
+    return
+  fi
   target_name=$(basename $target_path)
   # ファイルがある&&シンボリックリンク→unlink
   if [[ -e ~/${target_name} && -L ~/${target_name} ]]; then
@@ -35,8 +38,13 @@ here_dir=$(
   pwd
 )
 zshrc_path=$(realpath "${here_dir}/../.zshrc")
+zshenv_path=$(realpath "${here_dir}/../.zshenv")
+zshrc_local_path=$(realpath "${here_dir}/.zshrc_local")
+zshenv_local_path=$(realpath "${here_dir}/.zshenv_local")
 
-# .zshrcのシンボリックリンクをホームディレクトリに
+# 各シンボリックリンクを作成
 make_link ${zshrc_path}
-# .zsh/のシンボリックリンクをホームディレクトリに
+make_link ${zshenv_path}
+make_link ${zshrc_local_path}
+make_link ${zshenv_local_path}
 make_link ${here_dir}

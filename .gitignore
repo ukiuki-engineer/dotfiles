@@ -2,3 +2,5 @@
 /vscode-neovim/pack/dist/opt/*
 Session.vim
 local.zsh
+.zshenv_local
+.zshrc_local
