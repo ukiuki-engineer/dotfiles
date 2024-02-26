@@ -22,20 +22,12 @@ zinit light-mode for \
 
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
+zinit light unixorn/fzf-zsh-plugin
 # oh-my-zshのプラグイン
 # zinit snippet OMZP::git
 # ------------------------------------------------------------------------------
 # 手動インストール/ロード
 # ------------------------------------------------------------------------------
-# fzfインストール
-if [ ! -e ~/.fzf ]; then
-   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-   ~/.fzf/install --key-bindings --completion  --update-rc   
-fi
-
-# fzfの設定をロード
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 # mytoolsをダウンロード
 if [ ! -e ~/mytools ]; then
   git clone https://github.com/ukiuki-engineer/mytools
