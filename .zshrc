@@ -1,33 +1,32 @@
+# ------------------------------------------------------------------------------
+# oh-my-zsh
+# ------------------------------------------------------------------------------
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
 # Theme configuration
 ZSH_THEME="cobalt2"
 
-# pluginsで管理するツール類のインストール
-if [ ! -e ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions ]; then
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-fi
-
-# plugins
-plugins=(
-  git
-  zsh-autosuggestions
-)
-
 source $ZSH/oh-my-zsh.sh
-
 # ------------------------------------------------------------------------------
-# 各種ツールのインストール/ロード
+# zinit
 # ------------------------------------------------------------------------------
-# zsh-syntax-highlighting
-if [ ! -e ~/zsh-syntax-highlighting ]; then
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ~/zsh-syntax-highlighting
-  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-else
-  source ~/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-fi
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
 
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+# oh-my-zshのプラグイン
+# zinit snippet OMZP::git
+# ------------------------------------------------------------------------------
+# 手動インストール/ロード
+# ------------------------------------------------------------------------------
 # fzfインストール
 if [ ! -e ~/.fzf ]; then
    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
