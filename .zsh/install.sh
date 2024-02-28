@@ -38,13 +38,9 @@ here_dir=$(
   pwd
 )
 zshrc_path=$(realpath "${here_dir}/../.zshrc")
-zshenv_path=$(realpath "${here_dir}/../.zshenv")
 zshrc_local_path=$(realpath "${here_dir}/../.zshrc_local")
-zshenv_local_path=$(realpath "${here_dir}/../.zshenv_local")
 
 # 各シンボリックリンクを作成
 make_link ${zshrc_path}
-make_link ${zshenv_path}
 make_link ${zshrc_local_path}
-make_link ${zshenv_local_path}
 make_link ${here_dir}
