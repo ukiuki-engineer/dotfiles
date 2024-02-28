@@ -54,7 +54,7 @@ fzf_docker_exec_shell() {
 
 # 選択した絵文字を返す
 fzf_emoji(){
-  echo $(cat ~/.skk/SKK-JISYO.emoji.utf8 | grep -v ';;' | fzf)\
+  echo $(cat $HOME/.skk/SKK-JISYO.emoji.utf8 | grep -v ';;' | fzf)\
     | awk '{print $2}'\
     | tr -d /
 }

@@ -13,15 +13,15 @@ function make_link() {
   fi
   target_name=$(basename $target_path)
   # ファイルがある&&シンボリックリンク→unlink
-  if [[ -e ~/${target_name} && -L ~/${target_name} ]]; then
-    unlink ~/${target_name}
+  if [[ -e $HOME/${target_name} && -L $HOME/${target_name} ]]; then
+    unlink $HOME/${target_name}
   # ファイルがある&&シンボリックリンクではない→バックアップを取る
-  elif [[ -e ~/${target_name} && ! -L ~/${target_name} ]]; then
-    mv ~/${target_name} ~/${target_name}.bak
-    echo " \"~/${target_name}\" のバックアップ \"~/${target_name}.bak\" を作成しました。"
+  elif [[ -e $HOME/${target_name} && ! -L $HOME/${target_name} ]]; then
+    mv $HOME/${target_name} $HOME/${target_name}.bak
+    echo " \"$HOME/${target_name}\" のバックアップ \"$HOME/${target_name}.bak\" を作成しました。"
   fi
-  ln -s ${target_path} ~/${target_name}
-  echo "シンボリックリンク \"${target_path} -> ~/${target_name}\" を作成しました。"
+  ln -s ${target_path} $HOME/${target_name}
+  echo "シンボリックリンク \"${target_path} -> $HOME/${target_name}\" を作成しました。"
 }
 
 # zinitのインストール

@@ -19,20 +19,20 @@ zinit light unixorn/fzf-zsh-plugin
 # 手動インストール
 # ------------------------------------------------------------------------------
 # mytoolsをダウンロード
-if [ ! -e ~/mytools ]; then
+if [ ! -e $HOME/mytools ]; then
   git clone https://github.com/ukiuki-engineer/mytools
 fi
 
 # fzfによるgit操作設定をロード
-[ -f ~/mytools/fzf_git/fzf_git.sh ] && source ~/mytools/fzf_git/fzf_git.sh
+[ -f $HOME/mytools/fzf_git/fzf_git.sh ] && source ~/mytools/fzf_git/fzf_git.sh
 # ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------
-source ~/.zsh/config.zsh
-source ~/.zsh/functions.zsh
-source ~/.zsh/aliases.zsh
+source $HOME/.zsh/config.zsh
+source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/aliases.zsh
 
 # 環境固有の設定
-if [[ -f ~/.zshrc_local ]]; then
-    source ~/.zshrc_local
+if [[ -f $HOME/.zshrc_local ]]; then
+    source $HOME/.zshrc_local
 fi
