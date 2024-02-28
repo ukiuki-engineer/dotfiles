@@ -13,6 +13,13 @@ export PATH=$HOME/bin:$PATH
 # TODO: 本当はneovimにしたいけど、何故かタグジャンプが上手くいかない
 export MANPAGER="col -b -x | /usr/local/bin/vim -R -c 'set ft=man noma nu' -"
 export FZF_DEFAULT_OPTS="--height=60% --border"
+LSOPTIONS=""
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  LSOPTIONS=" -FG"
+elif [[ "$OSTYPE" == "linux-gnu"* ]] || [[ "$OSTYPE" == "freebsd"* ]]; then
+  LSOPTIONS=" -F --color=auto"
+fi
+export LSOPTIONS
 # ------------------------------------------------------------------------------
 # 基本的な設定
 # ------------------------------------------------------------------------------
@@ -40,9 +47,9 @@ zstyle ':completion:*:default' menu select=1
 # cd周り
 # auto_ls
 function chpwd(){
-    if [[ $(pwd) != $HOME ]]; then;
-        ls
-    fi
+  if [[ $(pwd) != $HOME ]]; then;
+    eval "\ls ${LSOPTIONS}"
+  fi
 }
 autoload chpwd
 
