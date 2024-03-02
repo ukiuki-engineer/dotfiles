@@ -5,7 +5,7 @@
 #       動作が極端に重くなったりする。
 # ------------------------------------------------------------------------------
 export LANG=ja_JP.UTF-8
-export PATH=$HOME/bin:$PATH
+add_to_path_head $HOME/bin:$PATH
 # manをvimで開く
 # NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
 # -Rのみ      : 保存はできないが編集自体はできてしまう

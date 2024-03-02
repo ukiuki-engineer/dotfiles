@@ -28,8 +28,8 @@ fi
 # ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------
-source $HOME/.zsh/config.zsh
 source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/config.zsh
 source $HOME/.zsh/aliases.zsh
 
 # 環境固有の設定
