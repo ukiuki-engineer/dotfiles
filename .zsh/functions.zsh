@@ -2,14 +2,14 @@
 # functions
 # ==============================================================================
 # ダブらないように$PATHに追加する(先頭)
-add_to_path_head() {
+path_prepend() {
   if [[ ":$PATH:" != *":$1:"* ]]; then
     export PATH="$1:$PATH"
   fi
 }
 
 # ダブらないように$PATHに追加する(末尾)
-add_to_path_tail() {
+path_append() {
   if [[ ":$PATH:" != *":$1:"* ]]; then
     export PATH="$PATH:$1"
   fi
