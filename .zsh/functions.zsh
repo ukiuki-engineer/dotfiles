@@ -4,14 +4,14 @@
 # ダブらないように$PATHに追加する(先頭)
 path_prepend() {
   if [[ ":$PATH:" != *":$1:"* ]]; then
-    export PATH="$1:$PATH"
+    export PATH=$1:${PATH}
   fi
 }
 
 # ダブらないように$PATHに追加する(末尾)
 path_append() {
   if [[ ":$PATH:" != *":$1:"* ]]; then
-    export PATH="$PATH:$1"
+    export PATH=${PATH}:$1
   fi
 }
 
