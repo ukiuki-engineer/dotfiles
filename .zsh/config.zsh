@@ -36,12 +36,15 @@ setopt hist_save_no_dups        # 重複するコマンドが保存されると�
 setopt extended_history         # コマンドのタイムスタンプをHISTFILEに記録する
 setopt hist_expire_dups_first   # HISTFILEのサイズがHISTSIZEを超える場合は、最初に重複を削除する
 
-# 補完で大文字小文字を区別しない
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-# 補完候補をカーソルで選択できるように
+# 補完の設定
+#
+# 補完候補をカーソルで選択
+zstyle ':completion:*:default' menu select=1
+# 大文字小文字を区別しない、部分一致
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=* l:|=*'
+# 補完システムの初期化
 autoload -U compinit
 compinit
-zstyle ':completion:*:default' menu select=1
 
 # cd周り
 # auto_ls
