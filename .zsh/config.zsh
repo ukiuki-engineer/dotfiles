@@ -59,6 +59,11 @@ function chpwd(){
 }
 autoload chpwd
 
+# viモード
+bindkey -v
+# <C-f>でautosuggestを受け入れる
+bindkey -M viins '^f' autosuggest-accept
+
 # ディレクトリ名だけでcdする
 setopt AUTO_CD
 # cd したら自動的にpushdする
