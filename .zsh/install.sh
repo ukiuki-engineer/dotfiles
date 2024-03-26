@@ -44,3 +44,15 @@ zshrc_local_path=$(realpath "${here_dir}/../.zshrc_local")
 make_link ${zshrc_path}
 make_link ${zshrc_local_path}
 make_link ${here_dir}
+# ------------------------------------------------------------------------------
+# WSL固有の処理
+# ------------------------------------------------------------------------------
+if [ -n "$WSLENV" ]; then
+  # dockerのインストール
+  if ! which docker >/dev/null 2>&1; then
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sudo sh get-docker.sh
+    # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
+    # sudo usermod -aG docker $USER
+  fi
+fi

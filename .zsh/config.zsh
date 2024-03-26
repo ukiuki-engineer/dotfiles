@@ -74,16 +74,3 @@ setopt PUSHD_IGNORE_DUPS
 bindkey -v
 # <C-f>でautosuggestを受け入れる
 bindkey -M viins '^f' autosuggest-accept
-# ------------------------------------------------------------------------------
-# WSL固有の設定
-# ------------------------------------------------------------------------------
-if [ -n "$WSLENV" ]; then
-  # dockerのインストール
-  if ! which docker >/dev/null 2>&1; then
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sudo sh get-docker.sh
-    # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
-    # sudo usermod -aG docker $USER
-  fi
-fi
-
