@@ -43,3 +43,12 @@ setopt PUSHD_IGNORE_DUPS
 bindkey -v
 # <C-f>でautosuggestを受け入れる
 bindkey -M viins '^f' autosuggest-accept
+# insert mode中はEmacsキーバインドを使用
+bindkey -M viins '^f' forward-char
+bindkey -M viins '^b' backward-char
+bindkey -M viins '^p' up-line-or-history
+bindkey -M viins '^n' down-line-or-history
+bindkey -M viins '^a' beginning-of-line
+bindkey -M viins '^e' end-of-line
+bindkey -M viins '^h' backward-delete-char
+bindkey -M viins '^d' delete-char-or-list
