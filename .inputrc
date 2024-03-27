@@ -1,0 +1,14 @@
+# viモードを使用
+set editing-mode vi
+# insert mode中はemacsキーバインドを使用する
+$if mode=vi
+  set keymap vi-insert
+  "\C-f": forward-char
+  "\C-b": backward-char
+  "\C-p": previous-history
+  "\C-n": next-history
+  "\C-a": beginning-of-line
+  "\C-e": end-of-line
+  "\C-h": backward-delete-char
+  "\C-d": delete-char
+$endif
