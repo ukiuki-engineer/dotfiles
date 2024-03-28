@@ -39,12 +39,17 @@ setopt PUSHD_IGNORE_DUPS
 # ------------------------------------------------------------------------------
 # キーバインド
 # ------------------------------------------------------------------------------
-# insert mode中はEmacsキーバインドを使用
-bindkey -M viins '^f' forward-char
-bindkey -M viins '^b' backward-char
-bindkey -M viins '^p' up-line-or-history
-bindkey -M viins '^n' down-line-or-history
-bindkey -M viins '^a' beginning-of-line
-bindkey -M viins '^e' end-of-line
-bindkey -M viins '^h' backward-delete-char
-bindkey -M viins '^d' delete-char-or-list
+# 念のためちゃんとviモードになっているかチェックする
+if bindkey | grep '^"\^\[' > /dev/null 2>&1; then
+  # insert mode中はEmacsキーバインドを使用
+  bindkey -M viins '^f' forward-char
+  bindkey -M viins '^b' backward-char
+  bindkey -M viins '^p' up-line-or-history
+  bindkey -M viins '^n' down-line-or-history
+  bindkey -M viins '^a' beginning-of-line
+  bindkey -M viins '^e' end-of-line
+  bindkey -M viins '^h' backward-delete-char
+  bindkey -M viins '^d' delete-char-or-list
+else
+  # TODO: viモードになっていない場合何か警告出す
+fi
