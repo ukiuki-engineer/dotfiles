@@ -39,10 +39,6 @@ setopt PUSHD_IGNORE_DUPS
 # ------------------------------------------------------------------------------
 # キーバインド
 # ------------------------------------------------------------------------------
-# viモード
-bindkey -v
-# <C-f>でautosuggestを受け入れる
-bindkey -M viins '^f' autosuggest-accept
 # insert mode中はEmacsキーバインドを使用
 bindkey -M viins '^f' forward-char
 bindkey -M viins '^b' backward-char

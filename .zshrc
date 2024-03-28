@@ -10,6 +10,12 @@ zinit light-mode for \
     zdharma-continuum/zinit-annex-patch-dl \
     zdharma-continuum/zinit-annex-rust
 
+# viモードを使用
+# NOTE: プラグイン読み込み後に入れると、keybindが上書きされてしまうので、
+#       ここで入れておく
+bindkey -v
+
+# プラグインの読み込み
 zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
 zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
