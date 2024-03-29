@@ -24,3 +24,5 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]] || [[ "$OSTYPE" == "freebsd"* ]]; then
 fi
 export LSOPTIONS
 
+# Neovimの設定ファイルを切り替えたいときはこれをいじる
+export NVIM_APPNAME="nvim"
