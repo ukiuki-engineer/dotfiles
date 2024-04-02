@@ -17,9 +17,9 @@ export FZF_DEFAULT_OPTS="--height=60% --border"
 
 # lsコマンドのオプション
 LSOPTIONS=""
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ $OSTYPE == "darwin"* ]]; then
   LSOPTIONS=" -FG"
-elif [[ "$OSTYPE" == "linux-gnu"* ]] || [[ "$OSTYPE" == "freebsd"* ]]; then
+elif [[ $OSTYPE == "linux-gnu"* ]] || [[ $OSTYPE == "freebsd"* ]]; then
   LSOPTIONS=" -F --color=auto"
 fi
 export LSOPTIONS
