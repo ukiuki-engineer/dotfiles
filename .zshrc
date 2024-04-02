@@ -5,10 +5,10 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 zinit light-mode for \
-    zdharma-continuum/zinit-annex-as-monitor \
-    zdharma-continuum/zinit-annex-bin-gem-node \
-    zdharma-continuum/zinit-annex-patch-dl \
-    zdharma-continuum/zinit-annex-rust
+  zdharma-continuum/zinit-annex-as-monitor \
+  zdharma-continuum/zinit-annex-bin-gem-node \
+  zdharma-continuum/zinit-annex-patch-dl \
+  zdharma-continuum/zinit-annex-rust
 
 # viモードを使用
 # NOTE: プラグイン読み込み後に入れると、keybindが上書きされてしまうので、
@@ -41,5 +41,5 @@ source $HOME/.zsh/aliases.zsh
 
 # 環境固有の設定
 if [[ -f $HOME/.zshrc_local ]]; then
-    source $HOME/.zshrc_local
+  source $HOME/.zshrc_local
 fi
