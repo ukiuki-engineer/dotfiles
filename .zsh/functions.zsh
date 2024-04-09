@@ -66,13 +66,6 @@ fzf_docker_exec_shell() {
   # eval $exec_command
 }
 
-# 選択した絵文字を返す
-fzf_emoji(){
-  echo $(cat $HOME/.skk/SKK-JISYO.emoji.utf8 | grep -v ';;' | fzf)\
-    | awk '{print $2}'\
-    | tr -d /
-}
-
 fzf_find_file_with_preview() {
   rg --files --hidden --follow --glob "!**/.git/*"\
     | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
