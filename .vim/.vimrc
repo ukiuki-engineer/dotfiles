@@ -4,7 +4,12 @@
 " ------------------------------------------------------------------------------
 " options
 " ------------------------------------------------------------------------------
-" 文字コード{{{
+" Vi互換を使用しない
+set nocompatible
+
+"
+" 文字コード
+"
 " NOTE: `:h encoding-values`
 " Vim が内部処理に利用する文字コード。保存時に使用する文字コード
 set encoding=utf-8
@@ -12,31 +17,10 @@ set encoding=utf-8
 set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 " 新規ファイルを作成する際の文字コード
 set fileencoding=utf-8
-" }}}
-set nobackup
-set noswapfile
-set autoread
-set hidden
-set showcmd
-set mouse=a
-" カレントディレクトリをパスに追加
-set path+=$PWD/**
-" sessionに保存する内容を指定
-set sessionoptions=buffers,resize,curdir,tabpages
-set t_Co=256
-" カーソル行、列を表示
-set cursorline cursorcolumn
-" 行番号表示
-set number
-set ruler
-set list
-set listchars=tab:»-,trail:-,eol:↓,extends:»,precedes:«,nbsp:%
-set wrap
-set laststatus=2
-set cmdheight=2
-set showcmd
-set title
+
+"
 " コマンドライン補完の設定
+"
 if exists("+wildmenu")
   " コマンドライン補完の拡張モードを使用する
   set wildmenu
@@ -49,13 +33,20 @@ endif
 if exists("+wildoptions")
   silent! set wildoptions=pum
 endif
+
+"
+" インデントとかTabとか
+"
 " Tab 文字を半角スペースにする
 set expandtab
-" 行頭以外の Tab 文字の表示幅 (スペースの数)
-set tabstop=2
-" 行頭での Tab 文字の表示幅
-set shiftwidth=2
+" インデントは基本スペース2
+set shiftwidth=2 tabstop=2 softtabstop=2
+" 自動インデント
+set autoindent smartindent
+
+"
 " カーソル設定
+"
 if has('vim_starting')
   " 挿入モード時に点滅の縦棒タイプのカーソル
   let &t_SI .= "\e[5 q"
@@ -64,32 +55,75 @@ if has('vim_starting')
   " 置換モード時に点滅の下線タイプのカーソル
   let &t_SR .= "\e[3 q"
 endif
-" 自動的にインデントする
-set autoindent
-set smartindent
+
+"
+" 検索の挙動に関する設定
+"
+" 検索時に大文字小文字を無視
+set ignorecase
+" 大文字小文字の両方が含まれている場合は大文字小文字を区別
+set smartcase
+" マッチした文字列をハイライト
+set hlsearch
+" リアルタイムで表示
+set incsearch
+" 検索時にファイルの最後まで行ったら最初に戻らない
+set nowrapscan
+" マッチした数を表示
+set shortmess-=S
+
+"
+" ファイルの取扱い
+"
+" バックアップ、スワップファイルを作らない
+set nobackup noswapfile
+" ファイルが外部で編集されたら即座に反映
+set autoread
+set hidden
+
+"
+" 編集に関する見た目系の設定
+"
+" カーソル行、列を表示
+set cursorline cursorcolumn
+" 行番号表示
+set number
+" 行末記号とかそういうやつを定義
+set listchars=tab:»-,trail:-,eol:↓,extends:»,precedes:«,nbsp:%
+" ↑を表示
+set list
+" 長い行を折り返す
+set wrap
+" テキスト挿入中の自動折り返しを日本語に対応させる
+set formatoptions+=mM
+" 括弧入力時に対応する括弧を表示
+set showmatch
+set t_Co=256
+
+"
+" ステータスラインとか
+"
+" ステータスラインを常に表示
+set laststatus=2
+" コマンドラインの高さ
+set cmdheight=2
+" ルーラーを表示
+set ruler
+" コマンドをステータス行に表示
+set showcmd
+set title
+set showcmd
+
+"
+" その他
+"
+" マウス操作オン(ほとんど使わないけど)
+set mouse=a
 " クリップボード連携を有効にする
 set clipboard+=unnamed
 " クリップボード連携を有効にした時に BackSpace (Delete) が効かなくなるので設定する
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=indent,eol,start
-" 括弧入力時に対応する括弧を表示
-set showmatch
-" テキスト挿入中の自動折り返しを日本語に対応させる
-set formatoptions+=mM
-" 検索の挙動に関する設定{{{
-" 検索時に大文字小文字を無視
-set ignorecase
-" 大文字小文字の両方が含まれている場合は大文字小文字を区別
-set smartcase
-" リアルタイムで表示
-set incsearch
-" マッチした文字列をハイライト
-set hlsearch
-" 検索時にファイルの最後まで行ったら最初に戻らない
-set nowrapscan
-" マッチした数を表示
-set shortmess-=S
-" }}}
 " ------------------------------------------------------------------------------
 " autocmd
 " ------------------------------------------------------------------------------
