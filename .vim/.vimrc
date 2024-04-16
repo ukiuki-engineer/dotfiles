@@ -19,22 +19,6 @@ set fileencodings=utf-8,sjis,iso-2022-jp,euc-jp
 set fileencoding=utf-8
 
 "
-" コマンドライン補完の設定
-"
-if exists("+wildmenu")
-  " コマンドライン補完の拡張モードを使用する
-  set wildmenu
-endif
-if exists("+wildmode")
-  " 次のマッチを完全に補完する
-  set wildmode=full
-endif
-" ポップアップメニューを表示
-if exists("+wildoptions")
-  silent! set wildoptions=pum
-endif
-
-"
 " インデントとかTabとか
 "
 " Tab 文字を半角スペースにする
@@ -73,10 +57,20 @@ set nowrapscan
 set shortmess-=S
 
 "
+" コマンドライン補完の設定
+"
+" コマンドライン補完の拡張モードを使用する
+set wildmenu
+" 次のマッチを完全に補完する
+set wildmode=full
+" ポップアップメニューを表示
+silent! set wildoptions=pum
+
+"
 " ファイルの取扱い
 "
 " バックアップ、スワップファイルを作らない
-set nobackup noswapfile
+" set nobackup noswapfile
 " ファイルが外部で編集されたら即座に反映
 set autoread
 set hidden
