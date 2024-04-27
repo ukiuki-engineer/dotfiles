@@ -131,6 +131,11 @@ augroup END
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <TAB> :bn<Enter>
 nnoremap <S-TAB> :bN<Enter>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
 " ------------------------------------------------------------------------------
 packadd! matchit " %でタグジャンプを有効化
 " ファイル形式別プラグインの有効化

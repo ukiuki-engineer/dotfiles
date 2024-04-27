@@ -143,8 +143,11 @@ augroup END
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
 nnoremap <TAB> :bn<Enter>
 nnoremap <S-TAB> :bN<Enter>
-nnoremap <C-j> 7j
-nnoremap <C-k> 7k
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
 " ------------------------------------------------------------------------------
 " commands
 " ------------------------------------------------------------------------------
