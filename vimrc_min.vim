@@ -29,7 +29,7 @@ set shiftwidth=2 tabstop=2 softtabstop=2
 set autoindent smartindent
 
 "
-" カーソル設定
+" モードに応じてカーソルの形を変える
 "
 if has('vim_starting')
   " 挿入モード時に点滅の縦棒タイプのカーソル
@@ -41,7 +41,7 @@ if has('vim_starting')
 endif
 
 "
-" 検索の挙動に関する設定
+" 検索
 "
 " 検索時に大文字小文字を無視
 set ignorecase
@@ -57,7 +57,7 @@ set nowrapscan
 set shortmess-=S
 
 "
-" コマンドライン補完の設定
+" コマンドライン補完
 "
 " コマンドライン補完の拡張モードを使用する
 set wildmenu
@@ -70,13 +70,13 @@ silent! set wildoptions=pum
 " ファイルの取扱い
 "
 " バックアップ、スワップファイルを作らない
-" set nobackup noswapfile
+set nobackup noswapfile
 " ファイルが外部で編集されたら即座に反映
 set autoread
 set hidden
 
 "
-" 編集に関する見た目系の設定
+" 編集に関する見た目系
 "
 " カーソル行、列を表示
 set cursorline cursorcolumn
@@ -123,21 +123,31 @@ set backspace=indent,eol,start
 " ------------------------------------------------------------------------------
 augroup MyVimrc
   autocmd!
+  " .env系はシェルスクリプトとして開く
   autocmd BufRead,BufNewFile *.env,*.env.* setlocal filetype=sh
 augroup END
 " ------------------------------------------------------------------------------
 " keymaps
 " ------------------------------------------------------------------------------
+" Esc2回で検索結果のハイライトをOFFに
 nnoremap <Esc><Esc> :nohlsearch<CR><Esc>
+" バッファ移動
 nnoremap <TAB> :bn<Enter>
 nnoremap <S-TAB> :bN<Enter>
+" cmdlineモードでemacsキーバインドを使う
 cnoremap <C-b> <Left>
 cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-d> <Del>
 " ------------------------------------------------------------------------------
-packadd! matchit " %でタグジャンプを有効化
+"  組込プラグインの制御
+" ------------------------------------------------------------------------------
+" `%`での対記号ジャンプを強化(htmlの開始タグ-終了タグ間でジャンプできるようになったりとか)
+packadd! matchit
+" ------------------------------------------------------------------------------
+"  その他
+" ------------------------------------------------------------------------------
 " ファイル形式別プラグインの有効化
 filetype plugin indent on
 " シンタックスハイライトの有効化
