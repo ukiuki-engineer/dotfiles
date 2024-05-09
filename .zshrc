@@ -21,6 +21,8 @@ zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
 zinit light unixorn/fzf-zsh-plugin
+zinit light zdharma/history-search-multi-word # NOTE: fzfとどっち使うか迷うけど一旦こっち使ってみる。
+# zinit light marlonrichert/zsh-autocomplete # TODO: 良いんだけどキーバインドが気に入らない。設定要検討。
 # ------------------------------------------------------------------------------
 # 手動インストール
 # ------------------------------------------------------------------------------
