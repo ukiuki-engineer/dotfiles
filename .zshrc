@@ -38,7 +38,7 @@ fi
 # 設定をロード
 # ------------------------------------------------------------------------------
 source $HOME/.zsh/env.zsh
-source $HOME/.zsh/functions.zsh
+source $HOME/.zsh/utils.zsh
 source $HOME/.zsh/config.zsh
 source $HOME/.zsh/aliases.zsh
 
