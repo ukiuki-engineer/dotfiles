@@ -20,6 +20,7 @@ zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled 
 zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions # Additional completion definitions
 zinit light unixorn/fzf-zsh-plugin
 zinit light zdharma/history-search-multi-word # NOTE: fzfとどっち使うか迷うけど一旦こっち使ってみる。
 # zinit light marlonrichert/zsh-autocomplete # TODO: 良いんだけどキーバインドが気に入らない。設定要検討。
