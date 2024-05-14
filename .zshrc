@@ -1,5 +1,6 @@
 # ------------------------------------------------------------------------------
 # zinit
+# 一回だけ行えば良い処理などはここではなくなるべくinstall.shに書く
 # ------------------------------------------------------------------------------
 source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
@@ -15,7 +16,11 @@ zinit light-mode for \
 #       ここで入れておく
 bindkey -v
 
-# プラグインの読み込み
+#
+# プラグイン
+# NOTE: プラグインを削除する場合、記述を削除orコメントアウトして、以下でキャッシュクリアする
+# zinit delete --clean
+#
 zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
 zinit light sindresorhus/pure
 zinit light zsh-users/zsh-autosuggestions
@@ -25,22 +30,17 @@ zinit light unixorn/fzf-zsh-plugin
 zinit light zdharma/history-search-multi-word # NOTE: fzfとどっち使うか迷うけど一旦こっち使ってみる。
 # zinit light marlonrichert/zsh-autocomplete # TODO: 良いんだけどキーバインドが気に入らない。設定要検討。
 # ------------------------------------------------------------------------------
-# 手動インストール
-# ------------------------------------------------------------------------------
-# mytoolsをダウンロード
-if [ ! -e $HOME/mytools ]; then
-  git clone https://github.com/ukiuki-engineer/mytools
-fi
-
-# fzfによるgit操作設定をロード
-[ -f $HOME/mytools/fzf_git/fzf_git.sh ] && source ~/mytools/fzf_git/fzf_git.sh
-# ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------
-source $HOME/.zsh/env.zsh
-source $HOME/.zsh/utils.zsh
-source $HOME/.zsh/config.zsh
-source $HOME/.zsh/aliases.zsh
+# fzfによるgit操作
+if [[ -f $HOME/mytools/fzf_git/fzf_git.sh ]]; then
+  source $HOME/mytools/fzf_git/fzf_git.sh
+fi
+source $HOME/.zsh/env.zsh     # 環境変数
+                              # NOTE: 諸事情により.zshenvは使用しない。使う必要が出たらまたその時考える。
+source $HOME/.zsh/utils.zsh   # 関数
+source $HOME/.zsh/config.zsh  # zshの設定
+source $HOME/.zsh/aliases.zsh # alias
 
 # 環境固有の設定
 if [[ -f $HOME/.zshrc_local ]]; then
