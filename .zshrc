@@ -26,14 +26,14 @@ bindkey -v
 # NOTE: プラグインを削除する場合、記述を削除orコメントアウトして、以下でキャッシュクリアする
 # zinit delete --clean
 #
-zinit ice pick"async.zsh" src"pure.zsh" # with zsh-async library that's bundled with it.
-zinit light sindresorhus/pure
-zinit light zsh-users/zsh-autosuggestions
-zinit light zsh-users/zsh-syntax-highlighting
-zinit light zsh-users/zsh-completions # Additional completion definitions
-zinit light unixorn/fzf-zsh-plugin
-zinit light zdharma/history-search-multi-word # NOTE: fzfとどっち使うか迷うけど一旦こっち使ってみる。
-# zinit light marlonrichert/zsh-autocomplete # TODO: 良いんだけどキーバインドが気に入らない。設定要検討。
+zinit ice pick"async.zsh" src"pure.zsh"         # with zsh-async library that's bundled with it.
+zinit light sindresorhus/pure                   # promptのテーマ
+zinit light zsh-users/zsh-autosuggestions       # コマンド候補の表示、入力補完
+zinit light zsh-users/zsh-syntax-highlighting   # syntax highlight
+zinit light zsh-users/zsh-completions           # Additional completion definitions
+zinit light unixorn/fzf-zsh-plugin              # fzf
+# zinit light zdharma/history-search-multi-word   # 履歴検索
+# zinit light marlonrichert/zsh-autocomplete      # TODO: 良いんだけどキーバインドが気に入らない。設定要検討。
 # ------------------------------------------------------------------------------
 # 設定をロード
 # ------------------------------------------------------------------------------
