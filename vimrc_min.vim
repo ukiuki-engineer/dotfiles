@@ -125,6 +125,8 @@ augroup MyVimrc
   autocmd!
   " .env系はシェルスクリプトとして開く
   autocmd BufRead,BufNewFile *.env,*.env.* setlocal filetype=sh
+  " 一部のFileTypeはインデントをスペース4に
+  autocmd FileType php,markdown setlocal tabstop=4 softtabstop=4 shiftwidth=4
 augroup END
 " ------------------------------------------------------------------------------
 " keymaps
