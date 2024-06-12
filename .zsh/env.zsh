@@ -4,7 +4,9 @@
 #       .zshenvは常に読み込まれるため、vimで頻繁に:call system()を実行するような処理があると、
 #       動作が極端に重くなったりする。
 # ------------------------------------------------------------------------------
-export LANG=ja_JP.UTF-8
+if locale -a | grep -q "^ja_JP.UTF-8$"; then
+  export LANG=ja_JP.UTF-8
+fi
 
 # manをvimで開く
 # NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
