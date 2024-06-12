@@ -67,6 +67,7 @@ function main() {
   if [ -n "$WSLENV" ]; then
     # dockerのインストール
     if ! which docker >/dev/null 2>&1; then
+      # NOTE: https://docs.docker.com/engine/install/ubuntu/
       curl -fsSL https://get.docker.com -o get-docker.sh
       sudo sh get-docker.sh
       # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
