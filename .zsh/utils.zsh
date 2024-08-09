@@ -80,3 +80,28 @@ fzf_rg_vim() {
         --preview-window 'right:60%,border-bottom,+{2}+3/3,~3' \
         --bind 'enter:become(nvim {1} +{2})'
 }
+
+fzf_man_pages() {
+  # previewに使用するコマンド
+  if which bat >/dev/null 2>&1; then
+    # batを使えるならbatで表示する
+    preview='man -P cat $(echo {1} | sed -e "s/(/ /" -e "s/)//" | awk "{print \$2, \$1}") | col -bx | bat --language=man --style=plain --paging=never --color=always'
+  else
+    preview='man -P cat $(echo {1} | sed -e "s/(/ /" -e "s/)//" | awk "{print \$2, \$1}")'
+  fi
+
+  # manページを選択
+  manPage=$(
+    man -k . \
+      | grep -E '\(1\)|\(2\)|\(3\)|\(4\)|\(5\)|\(6\)|\(7\)|\(8\)|\(9\)' \
+      | fzf \
+        --ansi \
+        --height=90% \
+        --border \
+        --preview $preview
+  )
+  manPage=$(echo $manPage | awk '{print $1}' | sed -e 's/(/ /' -e 's/)//' | awk '{print $2, $1}')
+
+  # コマンドをプロンプトに出力
+  print -z "man $manPage"
+}
