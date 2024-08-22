@@ -12,7 +12,7 @@ fi
 # NOTE: -Rとset noma片方ずつだと以下の問題があるため両方設定した方が良い
 # -Rのみ      : 保存はできないが編集自体はできてしまう
 # set nomaのみ: 開いた時点で編集した状態と判定されており、:qで終了できない
-export MANPAGER="col -b -x | nvim -R -c 'set ft=man noma nu' -"
+export MANPAGER="sh -c 'col -b -x | nvim -R -c \"set ft=man noma nu\" -'"
 
 # fzf
 export FZF_DEFAULT_OPTS="--height=60% --border"
