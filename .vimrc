@@ -154,6 +154,9 @@ cnoremap <C-f> <Right>
 cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-d> <Del>
+" 引用
+nnoremap g> :norm! I><space><CR>
+xnoremap g> :norm! I><space><CR>
 " ------------------------------------------------------------------------------
 " commands
 " ------------------------------------------------------------------------------
