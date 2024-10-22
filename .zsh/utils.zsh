@@ -71,14 +71,14 @@ fzf_find_file_with_preview() {
     | fzf --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
 }
 
-fzf_rg_vim() {
+fzf_rg() {
   rg --color=always --line-number --no-heading --smart-case "${*:-}" |
     fzf --ansi \
         --color "hl:-1:underline,hl+:-1:underline:reverse" \
         --delimiter : \
         --preview 'bat --color=always {1} --highlight-line {2}' \
         --preview-window 'right:60%,border-bottom,+{2}+3/3,~3' \
-        --bind 'enter:become(nvim {1} +{2})'
+        --bind 'enter:become(echo {1})'
 }
 
 fzf_man_pages() {
