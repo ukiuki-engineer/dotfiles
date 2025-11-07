@@ -105,3 +105,18 @@ fzf_man_pages() {
   # コマンドをプロンプトに出力
   print -z "man $manPage"
 }
+
+# 指定されたファイルの中で、改行コードが混在してるファイルを洗い出す
+check_mixed_eol() {
+  files=("$@")
+  awk '{ if (sub(/\r$/,"")) crlf++; else lf++; } END {if (crlf != 0 && lf != 0) print FILENAME,"CRLF:",crlf,"LF:",lf}' "${files[@]}"
+}
+
+# Git管理してるファイルの中で、改行コードが混在してるファイルを洗い出す
+git_mixed_eol() {
+  git ls-files \
+    | while read -r line; do
+      check_mixed_eol $line
+    done
+}
+
