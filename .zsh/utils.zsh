@@ -109,7 +109,12 @@ fzf_man_pages() {
 # 指定されたファイルの中で、改行コードが混在してるファイルを洗い出す
 check_mixed_eol() {
   files=("$@")
-  awk '{ if (sub(/\r$/,"")) crlf++; else lf++; } END {if (crlf != 0 && lf != 0) print FILENAME,"CRLF:",crlf,"LF:",lf}' "${files[@]}"
+  for file in "${files[@]}"; do
+    if file "$file" | grep -q 'text'; then
+      # テキストファイルのみ対象
+      awk '{ if (sub(/\r$/,"")) crlf++; else lf++; } END {if (crlf != 0 && lf != 0) print FILENAME,"CRLF:",crlf,"LF:",lf}' "${file}"
+    fi
+  done
 }
 
 # Git管理してるファイルの中で、改行コードが混在してるファイルを洗い出す
