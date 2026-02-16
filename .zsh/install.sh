@@ -2,6 +2,7 @@
 ################################################################################
 # my zshrc installation
 # 一回だけ行えば良い処理などはzshrcではなくなるべくここに書く
+# NOTE: 多分zshで実行しないといけない
 ################################################################################
 # ------------------------------------------------------------------------------
 # 関数
@@ -12,9 +13,6 @@
 #
 function _make_link() {
   target_path=$1
-  if [[ ! -f ${target_path} ]]; then
-    return
-  fi
   target_name=$(basename $target_path)
   # ファイルがある&&シンボリックリンク→unlink
   if [[ -e $HOME/${target_name} && -L $HOME/${target_name} ]]; then
@@ -45,7 +43,7 @@ function main() {
 
   # mytools
   if [ ! -e $HOME/mytools ]; then
-    git clone https://github.com/ukiuki-engineer/mytools
+    git clone https://github.com/ukiuki-engineer/mytools $HOME/mytools
   fi
   #
   # シンボリックリンク作成
@@ -64,16 +62,11 @@ function main() {
   #
   # WSL固有の処理
   #
-  if [ -n "$WSLENV" ]; then
-    # dockerのインストール
-    if ! which docker >/dev/null 2>&1; then
-      # NOTE: https://docs.docker.com/engine/install/ubuntu/
-      curl -fsSL https://get.docker.com -o get-docker.sh
-      sudo sh get-docker.sh
-      # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
-      # sudo usermod -aG docker $USER
-    fi
-  fi
+  # if [ -n "$WSLENV" ]; then
+  #   # TODO: 以下がされてるか判定してその結果次第で処理するように
+  #   # Ubuntuのレポジトリサーバを日本国内のに変更
+  #   sudo sed -i.bak -e "s/http:\/\/archive\.ubuntu\.com/http:\/\/jp\.archive\.ubuntu\.com/g" /etc/apt/sources.list
+  # fi
 }
 # ------------------------------------------------------------------------------
 main

@@ -4,6 +4,25 @@
 #       .zshenvは常に読み込まれるため、vimで頻繁に:call system()を実行するような処理があると、
 #       動作が極端に重くなったりする。
 # ------------------------------------------------------------------------------
+# ダブらないように$PATHに追加する(先頭)
+path_prepend() {
+  if [[ ":$PATH:" != *":$1:"* ]]; then
+    export PATH=$1:${PATH}
+  fi
+}
+
+# ダブらないように$PATHに追加する(末尾)
+path_append() {
+  if [[ ":$PATH:" != *":$1:"* ]]; then
+    export PATH=${PATH}:$1
+  fi
+}
+
+
+if [[ -d "$HOME/bin" ]] ; then
+  path_prepend $HOME/bin:$PATH
+fi
+
 if locale -a | grep -q "^ja_JP.UTF-8$"; then
   export LANG=ja_JP.UTF-8
 fi
