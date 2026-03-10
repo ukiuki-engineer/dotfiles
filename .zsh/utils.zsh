@@ -92,6 +92,14 @@ fzf_man_pages() {
   print -z "man $manPage"
 }
 
+# 実行可能なコマンドのリストを表示して、選択したコマンドを実行する
+fzf_commands() {
+  # コマンドを選択
+  command=$(compgen -c | sort -u | fzf)
+  # コマンドをプロンプトに出力
+  print -z $command
+}
+
 # 指定されたファイルの中で、改行コードが混在してるファイルを洗い出す
 check_mixed_eol() {
   files=("$@")
@@ -110,4 +118,5 @@ git_mixed_eol() {
       check_mixed_eol $line
     done
 }
+
 

@@ -11,3 +11,4 @@ alias gitLogOneline='git log --oneline --graph --date=format:"%Y/%m/%d %H:%M:%S"
 alias manPages='fzf_man_pages'
 alias fzfgrep='fzf_rg'
 alias gitMixedEol='git_mixed_eol'
+alias commans='fzf_commands'
