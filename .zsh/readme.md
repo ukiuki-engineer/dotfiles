@@ -15,3 +15,8 @@ sudo sh get-docker.sh
 # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
 sudo usermod -aG docker $USER
 ```
+# TODO
+
+- [ ] 起動速度が遅いからなんか対策する
+  - 遅延ロードとか入れる？でも面倒そう
+  - 便利コマンド系は設定ファイルから切り出す？
