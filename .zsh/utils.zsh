@@ -119,4 +119,54 @@ git_mixed_eol() {
     done
 }
 
+# ----------------------------------------
+# nvm の遅延ロード（lazy load）
+#
+# 目的:
+#   - シェル起動時に重い nvm.sh を読み込まない
+#   - Node 系コマンドを初めて使った瞬間だけ nvm を有効化する
+#
+# 仕組み:
+#   1) node / npm / npx / nvm / nvim を同名の関数で上書き
+#   2) 最初に呼ばれたときに load-nvm を実行
+#   3) nvm.sh を source して本物のコマンドを有効化
+#   4) ダミー関数を削除して再実行
+#
+# 注意:
+#   - 初回実行時のみ少し遅くなる
+#   - nvm が提供する補完もこの時点で有効になる
+#   - nvim もラップしているのは、coc.nvim などが
+#     起動時に Node を必要とするため
+# ----------------------------------------
 
+function load-nvm {
+  # ダミーとして定義した関数を削除する
+  # 削除しないと再帰呼び出しになって無限ループする
+  unset -f nvm node npm npx nvim
+
+  # nvm のインストール先ディレクトリ
+  export NVM_DIR="$HOME/.nvm"
+
+  # nvm 本体を読み込む（存在し、空でない場合のみ）
+  # source により現在のシェル環境に PATH や関数が追加される
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+
+  # nvm の bash 補完（zsh でも使用可）
+  [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+}
+
+# ----------------------------------------
+# ダミー関数群
+#
+# これらが最初に呼ばれた時点で load-nvm を実行し、
+# その後に本来のコマンドを同じ引数で再実行する
+# ----------------------------------------
+
+nvm()  { load-nvm; nvm  "$@"; }  # Node Version Manager
+node() { load-nvm; node "$@"; }  # Node.js 実行
+npm()  { load-nvm; npm  "$@"; }  # パッケージマネージャ
+npx()  { load-nvm; npx  "$@"; }  # npm 付属の実行ツール
+
+# Neovim 起動時に Node を必要とするプラグイン（例: coc.nvim）
+# を正常に動かすため、nvim も遅延ロード対象にする
+nvim() { load-nvm; nvim "$@"; }
