@@ -19,7 +19,14 @@ zstyle ':completion:*:default' menu select=1
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' 'r:|=* l:|=*'
 # 補完システムの初期化
 autoload -U compinit
-compinit
+typeset -g ZSH_COMPDUMP="${ZDOTDIR:-$HOME}/.zcompdump"
+if [[ -f "$ZSH_COMPDUMP" ]]; then
+  # 既存のダンプを使って高速起動（毎回のcompauditをスキップ）
+  compinit -C -d "$ZSH_COMPDUMP"
+else
+  # 初回のみ通常初期化してダンプを作成
+  compinit -d "$ZSH_COMPDUMP"
+fi
 # ------------------------------------------------------------------------------
 # cd周り
 # ------------------------------------------------------------------------------
