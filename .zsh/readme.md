@@ -15,6 +15,23 @@ sudo sh get-docker.sh
 # NOTE: sudo抜きでdockerコマンドを実行できるようにするには↓
 sudo usermod -aG docker $USER
 ```
+
+# memo
+
+今はzinit管理なので使ってないが、手動でfzfをインストールする場合の手順は以下。
+
+```sh
+# fzfインストール
+if [ ! -e ~/.fzf ]; then
+   git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+   ~/.fzf/install --key-bindings --completion  --update-rc   
+fi
+
+# fzfの設定をロード
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+```
+
+
 # TODO
 
 - [ ] 起動速度が遅いからなんか対策する
